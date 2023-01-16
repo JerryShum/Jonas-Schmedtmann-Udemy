@@ -101,4 +101,4 @@ function deleteShoppingCart(){
 //NOTE The 'this' keyword will point to the object that it is within
 //Inside of a function (normal declaration and expression) -> points to nothing(undefined)
 //Inside of arrow function -> points to window object (BROWSER WINDOW OBJECT -> kinda like the global object)
-//Inside of an object it will point to the object itself (object.propertyName)
+//Inside of a method (function inside of an object) it will point to the object itself (object.propertyName)

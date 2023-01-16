@@ -92,13 +92,148 @@ function deleteShoppingCart(){
     console.log('All products deleted');
 }
 
-//*This example will result in all products being deleted as the value of UNDEFINED is actually hoisted and not 10 because of var. -> undefined is falsy -> means if statement is fulfilled -> deleteShoppingCart is called
+//* This example will result in all products being deleted as the value of UNDEFINED is actually hoisted and not 10 because of var. -> undefined is falsy -> means if statement is fulfilled -> deleteShoppingCart is called
 
 */
 
 //? 'This' keyword
 
-//NOTE The 'this' keyword will point to the object that it is within
-//Inside of a function (normal declaration and expression) -> points to nothing(undefined)
+/*
+//> The 'this' keyword will point to the object that it is within
+//Inside of a function (normal declaration and expression) -> points to nothing(undefined) (MUST BE IN STRICT MODE)
 //Inside of arrow function -> points to window object (BROWSER WINDOW OBJECT -> kinda like the global object)
 //Inside of a method (function inside of an object) it will point to the object itself (object.propertyName)
+
+//____________________________________________________________________________________________________________
+
+//> This will log the window object to the console (the global object)
+console.log(this);
+
+//____________________________________________________________________________________________________________
+
+//* IN STRICT MODE (Function declaration / expression)
+//> This will log as undefined in STRICT MODE but in normal mode it will log as the window object
+const calcAge = function (birthYear) {
+    console.log(2022 - birthYear);
+    console.log(this);
+};
+calcAge(1991);
+
+//____________________________________________________________________________________________________________
+
+//? Arrow Functions
+//> Will log as the window object
+//This is because the arrow function does not get its own this keyword and instead gets the 'lexical' this keyword meaning that it will have the same this keyword value as its parent scope (in this case it will be the global scope) -> this keyword points to the window object because the parent scope of this particular arrow function is the global scope
+const calcAgeArrow = birthYear => {
+    console.log(2022 - birthYear);
+    console.log(this);
+};
+calcAgeArrow(1991);
+
+//____________________________________________________________________________________________________________
+
+//? Objects and methods
+//> When used within a method, it should point to the object the method is within
+
+const jerry = {
+    year: 2003,
+    calcAge: function () {
+        console.log(this);
+        console.log('Jerry is currently: ' + (2022 - this.year));
+    },
+};
+jerry.calcAge();
+
+//! However it should be stated that it is ONLY calling jerry's year because jerry was the OBJECT calling the calcAge function that has the this keyword within it
+
+//> What if we made another object and 'borrowed' the same method?
+
+const jerry2 = {
+    year: 2005,
+};
+
+//! This is called METHOD BORROWING and is simply copying the value from jerry.calcAge to jerry2.calcAge and assigning it as the same property
+jerry2.calcAge = jerry.calcAge;
+
+//> This means we can do this and it should return 17 as the this keyword POINTS TO the OBJECT CALLING the method.
+jerry2.calcAge();
+
+//> What if we do this instead:
+//We are assigning the value of jerry.calcAge to rando
+const rando = jerry.calcAge;
+console.log(rando);
+
+//What happends when we call this function (since its basically just copying the body and format of the calcAge function and assigning it to rando)
+rando();
+
+//> This will point to undefined as rando is a function expression
+//! It will also return an error because undefined.year does not exist
+*/
+
+//____________________________________________________________________________________________________________
+
+//? Regular Functions vs. Arrow Functions
+/*
+const jerry = {
+    year: 2003,
+    firstName: 'Jerry',
+    calcAge: function () {
+        console.log(this);
+        console.log('Jerry is currently: ' + (2022 - this.year));
+
+        //> Another problem that can arise is using a function from within a method
+        // const isMillenial = function() {
+        //     if(this.year >= 1981 && this.year <= 1996){
+        //         console.log('Millenial');
+        //     }
+        // }
+
+        //Will result in an error because this inside of the isMillenial function will return undefined (since it is within a function)\
+        //> To circumvent this:
+        const preserveThis = this;
+        //This will preserve the this keyword value to be the object (jerry) and save it into preserveThis
+        //And then we can do:
+        const isMillenial = function () {
+            if (preserveThis.year >= 1981 && preserveThis.year <= 1996) {
+                console.log('Millenial');
+            }
+        }
+
+        //! This works because we store the this keyword value from the METHOD (jerry) into a variable and use this variable instead of the this keyword inside of the function
+
+        //> We can also just use an ARROW FUNCTION (instead of normal function declaration) to circumvent this b/c arrow functions use the lexical this keyword and therefore will use the method this keyword instead
+
+
+    },
+
+    greet: () => console.log(`Hey ${this.firstName}`),
+};
+jerry.greet();
+
+//> jerry.greet() returns "Hey undefined" because an arrow function's this keyword will use the lexical this keyword (parent scope), and an OBJECT IS NOT CONSIDERED ITS OWN BLOCK/SCOPE as it is only an object literal (kinda like defining a variable)
+
+//! still in global scope -> uses this keyword from global scope -> uses this keyword from window object -> undefined b/c in the window object there is not firstName property -> undefined
+
+//! This is why we do not use VAR b/c it creates properties inside of the window object and can cause errors
+//This will create the firstName property inside of the window object allowing for the greet method to work properly
+//var firstName = 'Joe';
+
+//?Arguments keyword
+
+const addExpr = function (a, b) {
+    console.log(arguments);
+    return a + b;
+};
+
+addExpr(2, 5);
+
+//The arguments keyword will return an array of all of the arguments ([2,5])
+//This is useful if we need to loop over all of the arguments
+
+//! Arrow functions do NOT have the arguments keyword
+//! ONLY EXISTS IN REGULAR FUNCTIONS
+*/
+
+//____________________________________________________________________________________________________________
+
+//? Primitives vs. Objects (Primitve vs. Reference Types

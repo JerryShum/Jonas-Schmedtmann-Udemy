@@ -237,3 +237,80 @@ addExpr(2, 5);
 //____________________________________________________________________________________________________________
 
 //? Primitives vs. Objects (Primitve vs. Reference Types
+/*
+//Primitives are numbers, booleans, strings, etc.
+let age = 30;
+let oldAge = age;
+age = 31;
+console.log(age);//31
+console.log(oldAge);//30
+
+//Creating an object
+const me = {
+    name: 'Jerry',
+    age: 30,
+}
+
+const friend = me;
+friend.age = 27;
+
+console.log("me:" + me);
+console.log("Friend:" + friend);
+//> They end up being the same object (source of confusion between these two types)
+
+//The reason behind them being the same is that they both POINT TO THE SAME REFERENCE inside the callstack this REFERENCE then points to the object. -> Since they both point to the same reference, and friend.age changed the object, both of them would change(they're essentially the same thing but theyre just 2 references to the same object)
+
+//!ALSO the reason why we can "change" the value of friend even though it is constant -> value in call stack isn't actually changed (it is only the address of the object inside the heap memory), what is actually being changed is the value inside the HEAP MEMORY not the Call stack 
+*/
+//? Primitives and Objects In Practice
+
+//> Primitive Types
+let lastName = 'Williams';
+let oldLastName = lastName;
+lastName = 'Davis';
+console.log(lastName, oldLastName);
+
+//> Reference Types
+const cat = {
+    firstName: 'Cat',
+    lastName: 'Williams',
+    age: 27
+};
+
+const marriedCat = cat;
+marriedCat.lastName = 'Davis';
+console.log('Before Marriage:', cat);
+console.log('After Marriage:', marriedCat);
+
+//! Remember const marriedCat is "changable" b/c CALL STACK VALUE isn't being changed -> HEAP value is being changed
+//! HOWEVER you cannot assign marriedCat to another NEW OBJECT (this is changing the ADDRESS within the CALL STACK VALUE which you CANNOT DO b/c of CONST)
+
+//> Copying Objects
+// If we wanted to copy this object, we can use a function called Object.assign -> merge 2 objects and return a new one
+
+const cat2 = {
+    firstName: 'Cat',
+    lastName: 'Williams',
+    age: 27,
+    family: ['Alice', 'Bob']//An array is essentially an object -> object within object
+};
+
+//Will merge an EMPTY OBJECT and cat2 , CREATE A NEW OBJECT, -> and assign it to another variable (catCopy)
+const catCopy = Object.assign({}, cat2);
+catCopy.lastName = 'Davis';
+
+console.log('Before Marriage:', cat2);
+console.log('After Marriage', catCopy);
+//! Object.assign only creates a "SHALLOW" copy -> meaning it only copies stuff on the shallow level -> if there is an object inside of an object, this object will still point to the same variable
+
+//We are manipulating the object within the COPIED object 
+catCopy.family.push('Mary');
+catCopy.family.push('John');
+
+console.log('Before Marriage:', cat2);
+console.log('After Marriage', catCopy);
+
+//> We can see that the family property/object is the same for both cat2 and catCopy (catCopy is a shallow copy not a DEEP CLONE)
+// Both cat2 and catCopy have the same value within family: that POINTS to the SAME object inside the HEAP MEMORY meaning that when we change the array, we change both
+
+

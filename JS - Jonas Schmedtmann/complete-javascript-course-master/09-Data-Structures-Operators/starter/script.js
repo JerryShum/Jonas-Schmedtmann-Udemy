@@ -78,3 +78,19 @@ console.log(main, secondary);
 //And then destructuring the returned array
 
 console.log(restaurant.order(2, 0)); //Garlic bread and pizza
+const [starter, mainCourse] = restaurant.order(2, 0);
+console.log(starter, mainCourse);//Should have the values of garlic bread and pizza
+//>This is useful because you are immediately creating 2 variables out of a function call
+
+//* What happens with a nested array (2D) (NESTED DESTRUCTURING)
+const nested = [2, 4, [5, 6]];
+// const [i, , j] = nested;
+// console.log(i, j);
+//! To access the nested array, we must do destructuring within destructuring
+const [i, , [j, k]] = nested;
+console.log(i, j, k);
+
+//* Default values
+//> Setting a variable = 1 inside of the destructuing argument is how you set their default value if they aren't assigned one after destructuring
+const [p = 1, q = 1, r = 1] = [8, 9];
+console.log(p, q, r); //r is 1

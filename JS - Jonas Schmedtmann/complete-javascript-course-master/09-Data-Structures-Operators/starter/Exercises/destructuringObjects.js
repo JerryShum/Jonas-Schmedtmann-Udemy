@@ -89,9 +89,13 @@ console.log(bookTitle); //! The Cyberiad
       For example, the second book doesn't have the 'filmAdaptation' property.
       Destructure it into a variable called 'hasFilmAdaptation' with a default value of false. */
 
+const { filmAdaptation: hasFilmAdaptation = false } = books[1];
+
 
 /* D) Remember the 'author' variable from exercise A? It's time to reassign it.
       Destructure the author of the third book into existing variable called 'author'. */
+({ author } = books[2]);
+console.log(author);//Frank Herbert
 
 
 

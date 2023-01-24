@@ -97,7 +97,7 @@ console.log(p, q, r); //r is 1
 */
 
 //? Destructuring Objects
-
+/*
 // Data needed for first part of the section
 const restaurant = {
   name: 'Classico Italiano',
@@ -129,6 +129,8 @@ const restaurant = {
     },
   },
 };
+
+//________________________________________________________________________________________________________________
 
 //> In order to dsestructure objects, we use {}, Example using the restaurant object:
 //! Define the properties that you want to take -> this will store them into a variable with the same name
@@ -184,7 +186,86 @@ restaurant.orderDelivery({
   time: '22:30',
   address: 'Via del sole, 21',
 })
+*/
+
+//? The Spread Operator (...)
+//Used to unpack all the contents of an array
+//> ***USUALLY USED WHERE VALUES ARE SEPARATED BY COMMAS
+//> WORKS ON ALL ITERABLES -> STRINGS, MAPS, ARRAYS, SETS, etc. (NO OBJECTS)
+
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time, address }) {
+    console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`);
+  },
+
+  
+
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+    fri: {
+      open: 11,
+      close: 23,
+    },
+    sat: {
+      open: 0, // Open 24 hours
+      close: 24,
+    },
+  },
+};
+
+//________________________________________________________________________________________________________________
+
+//! Example:
+const arr = [7, 8, 9];
+//If we wanted to use the contents of this array in another array -> loop over this array OR -> manually input
+const badNewArr = [1, 2, arr[0], arr[1], arr[2]];
+
+//*Using the spread operator (...)
+//It's like taking out all the elements out of arr and writing them inside of newArray manually
+const newArr = [1, 2, ...arr];
+console.log(newArr);
+
+//! What if we were to use the spread operator while logging?
+console.log(...newArr); //1 2 7 8 9
+//It returns individual values instead of the array itself
+
+//________________________________________________________________________________________________________________
+
+//! More Practical Example
+//Using our restaurant object
+
+//> We are making an entirely new menu using the items from the old one
+//Using items from restaurant.mainMenu but also adding a new item 'Gnocci'
+const newMenu = [...restaurant.mainMenu, 'Gnocci'];
+console.log(newMenu);
+
+//________________________________________________________________________________________________________________
 
 
+//! Copying Arrays
+const mainMenuCopy = [...restaurant.mainMenu];
+
+//! Joining two arrays or more
+const overallMenu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(overallMenu);
+
+//! Using it on a string
+const str = 'Jerry';
+const letters = [...str, ' ', 'S,'];
+console.log(letters);
+console.log(...str);
 
 

@@ -1,17 +1,5 @@
 'use strict';
 
-// Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
-
-//? Destructuring Arrays
-/*
-//> A way of unpacking values from an array or an object into separate variables
-//Breaking a larger data structure into a smaller one like a variable
-
-//________________________________________________________________________________________________________________
-
-// Data needed for first part of the section
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -21,6 +9,23 @@ const restaurant = {
 
   order: function (starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time, address }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
+    );
+  },
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}.`
+    );
+  },
+
+  orderPizza: function (mainIngredient, ...otherIngredient) {
+    console.log(mainIngredient);
+    console.log(otherIngredient);
   },
 
   openingHours: {
@@ -38,6 +43,13 @@ const restaurant = {
     },
   },
 };
+
+// Data needed for a later exercise
+const flights =
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+
+//? Destructuring Arrays
+/*
 
 //! An example of destructuring
 //We are trying to take the elements within the arr array and convert them into a standalone variable
@@ -98,38 +110,6 @@ console.log(p, q, r); //r is 1
 
 //? Destructuring Objects
 /*
-// Data needed for first part of the section
-const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-
-  order: function (starterIndex, mainIndex) {
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
-
-  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time, address }) {
-    console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`);
-  },
-
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
-};
-
 //________________________________________________________________________________________________________________
 
 //> In order to dsestructure objects, we use {}, Example using the restaurant object:
@@ -196,45 +176,6 @@ restaurant.orderDelivery({
 /*
 //> ***USUALLY USED WHERE VALUES ARE SEPARATED BY COMMAS
 //> WORKS ON ALL ITERABLES -> STRINGS, MAPS, ARRAYS, SETS, etc. (NO OBJECTS)
-
-const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-
-  order: function (starterIndex, mainIndex) {
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
-
-  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time, address }) {
-    console.log(
-      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
-    );
-  },
-
-  orderPasta: function (ing1, ing2, ing3) {
-    console.log(
-      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}.`
-    );
-  },
-
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
-};
 
 //________________________________________________________________________________________________________________
 
@@ -326,52 +267,6 @@ console.log(restaurant.name);
 
 //________________________________________________________________________________________________________________
 
-const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-
-  order: function (starterIndex, mainIndex) {
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
-
-  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time, address }) {
-    console.log(
-      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
-    );
-  },
-
-  orderPasta: function (ing1, ing2, ing3) {
-    console.log(
-      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}.`
-    );
-  },
-
-  orderPizza: function (mainIngredient, ...otherIngredient) {
-    console.log(mainIngredient);
-    console.log(otherIngredient);
-  },
-
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
-};
-
-//________________________________________________________________________________________________________________
-
 //! OVERALL DESTRUCTURING & REST
 
 //! Example using destructuring (left hand side)
@@ -442,13 +337,18 @@ restaurant.orderPizza('Pepperoni (mainIngredient)');
 
 //________________________________________________________________________________________________________________
 
+
 //? Short Circuiting (&& and ||)
 
+/*
 //> 3 Properties of Logical operators:
 //! They don't have to use boolean types (true or false)
 //Use ANY data type
 //Return ANY data type
 //SHORT CIRCUITING
+
+//________________________________________________________________________________________________________________
+
 
 //> OR OPERATOR (||)
 //! Short circuiting means that if the used values are NOT BOOLEAN -> if first evaluated value is TRUTHY -> Immediately return that value
@@ -461,3 +361,117 @@ console.log(undefined || null); //null -> undefined is falsy -> skips undefined 
 
 console.log(0 || undefined || null || 'Hello' || 23 || '');//Will return 'Hello' b/c it is the first truthy value encountered
 //! It will shortcircuit the entire evaluation after finding its first truthy value and then return said value
+
+//> Using the restaurant object
+//There might be a property inside of the object of the number of guests -> we want do define a variable based on the number of guests and assign a default variable if it doesnt exist
+
+restaurant.numGuests = 12;
+//guests 1 = restaurant.numGuests if restaurant.numGuests exists, else guests1 = 10.
+const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+console.log(guests1);
+
+//! We can take advantage of shortcircuiting here
+//If restaurant.numGuests is a falsy value (0 or undefined) -> it will automatically move on to the next value (10) and since its the only other value and is TRUTHY 10 is automatically assigned
+//If it is NOT a falsy value -> the expression short circuits and will choose that value
+
+//!Useful for assigning default values (much easier than if/else and ternary)
+const guests2 = restaurant.numGuests || 10;
+console.log(guests2);
+
+//________________________________________________________________________________________________________________
+
+//> Short Circuiting with the AND operator
+
+console.log(0 && 'Jonas'); // Will return the 0 -> 0 is falsy -> entire expression is ignored and deemed FALSE
+console.log(7 && 'Jonas'); // Will return 'Jonas' -> 7 is truthy -> moves on in the expression
+
+console.log('Hello' && 23 && null && 'Jonas'); //Hello is truthy -> 23 is truthy-> null is falsy -> evalutation stops and returns null and SHORTCIRCUITS the rest of the evaluation
+
+//> Using restaurant object
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('Mushrooms', 'Spinach')
+};
+
+//! Using the && operator
+restaurant.orderPizza && restaurant.orderPizza('Mushrooms', 'Spinach');
+
+//________________________________________________________________________________________________________________
+
+//* Summary for Short Circuiting ($$ and ||)
+// The OR operator will return the first TRUTHY value of all the operands or the last value if all of them are falsy
+// The AND operator will returh the first FALSY value of all the operands or the last value if all of them are truthy
+
+//! Practical Applications
+//We can use the OR operator to set default values
+//We can use the AND operator to execute code in the 2nd operand if the first value is true
+*/
+
+//________________________________________________________________________________________________________________
+
+//? The Nullish Coalescing Operator (??)
+
+/*
+//> This is an example using the OR operator
+restaurant.numGuests = 0
+const guests2 = restaurant.numGuests || 10;
+console.log(guests2); //Returns 10
+
+//! The problem is that perhaps we want it to return 0 as we want to know if the restaurant has NO guests
+// The solution is to use ??
+
+//> using the ?? operator
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect); //Returns 0
+
+//! ?? works with NULLISH values -> null and undefined
+//Only nullish values will shortcircuit the expression 
+*/
+//________________________________________________________________________________________________________________
+
+//? Logical Assignment Operators
+
+//Creating 2 new restaurant objects
+//! Let's pretend that we got these objects from an API and want to set a default number of guests for restaurants that dont have that property
+// BAsically adding that property to restaurants that dont have them
+const rest1 = {
+  name: 'Capri',
+  numGuests: 0,
+}
+
+const rest2 = {
+  name: 'La Piazza',
+  owner: 'Giovanni Rossi'
+}
+
+// rest1.numGuests = rest1.numGuests || 10;
+// rest2.numGuests = rest2.numGuests || 10;
+
+console.log(rest1);
+console.log(rest2);
+
+//> Using the logical assignment operator (OR)
+//! Basically assigns that number/value to the variable if it is currently falsy
+// rest1.numGuests ||= 10;
+// rest2.numGuests ||= 10;
+
+console.log(rest1);
+console.log(rest2);
+
+//! What if the current numGuests is 0 (and we like that)
+//> We can use the NULLISH ASSIGNMENT OPERATOR -> false if null or undefined
+
+rest1.numGuests ??= 10;
+rest2.numGuests ??= 10;
+
+console.log(rest1);
+console.log(rest2);
+
+//! What if we want the owners name to be anonymous (if there is an owner)
+rest1.owner = rest1.owner && '<ANONYMOUS>'; //Undefined b/c rest1.owner doesn't exist and therefore undefined -> shortcircuited -> return undefined
+rest2.owner = rest2.owner && '<ANONYMOUS>';
+//This works because of the AND operator shortcircuiting (if rest2.owner exists (true) -> and operator -> anonymous)
+
+//> We can replace that with the AND ASSIGNMENT OPERATOR
+//Basically replaces the value if the element is currently truthy
+rest1.owner &&= '<ANONYMOUS>'
+rest2.owner &&= '<ANONYMOUS>'

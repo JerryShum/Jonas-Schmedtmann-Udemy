@@ -189,7 +189,11 @@ restaurant.orderDelivery({
 */
 
 //? The Spread Operator (...)
-//Used to unpack all the contents of an array
+//> Used to unpack all the contents of an array -> unpack array into individual elements
+//> Usually used to build new arrays using contents of old ones and to input multiple values into a function as arguments
+//> ON THE RIGHT SIDE OF = -> const meow = [...meowArray];
+
+/*
 //> ***USUALLY USED WHERE VALUES ARE SEPARATED BY COMMAS
 //> WORKS ON ALL ITERABLES -> STRINGS, MAPS, ARRAYS, SETS, etc. (NO OBJECTS)
 
@@ -205,10 +209,16 @@ const restaurant = {
   },
 
   orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time, address }) {
-    console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`);
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
+    );
   },
 
-  
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}.`
+    );
+  },
 
   openingHours: {
     thu: {
@@ -254,7 +264,6 @@ console.log(newMenu);
 
 //________________________________________________________________________________________________________________
 
-
 //! Copying Arrays
 const mainMenuCopy = [...restaurant.mainMenu];
 
@@ -268,4 +277,187 @@ const letters = [...str, ' ', 'S,'];
 console.log(letters);
 console.log(...str);
 
+//________________________________________________________________________________________________________________
 
+//> Creating a function (orderPasta)
+//Using the spread operator we can efficiently input arguments into a function
+
+const ingredients = [
+  prompt("Let's make pasta! Ingredient 1?"),
+  prompt('Ingredient 2?'),
+  prompt('Ingredient 3?'),
+];
+console.log(ingredients);
+
+//! Using the old way:
+//This is both tedious and inefficient
+restaurant.orderPasta(ingredients[0], ingredients[1], ingredients[2]);
+
+//! Using the spread operator:
+//This works because the spread operator spreads out the elements with commas -> meaning they are treated as valid arguments
+restaurant.orderPasta(...ingredients);
+
+//________________________________________________________________________________________________________________
+
+//> Spread operator can also work on objects
+//Creating a NEW restaurant object using the data from the original one and adding to it
+
+const newRestaurant = { foundedIn: 1998, ...restaurant, founder: 'Guissepe' };
+console.log(newRestaurant);
+
+//! Can make shallow copies of both arrays and objects
+//This creates a brand new COPY which is completely separate from the original
+const restaurantCopy = { ...restaurant };
+restaurantCopy.name = 'Ristorante Roma';
+console.log(restaurantCopy.name);
+console.log(restaurant.name);
+//The restaurants have diff names b/c they are separate from eachother
+*/
+
+//________________________________________________________________________________________________________________
+
+
+//? Rest Pattern and Rest Parameters
+//> Looks exactly like the spread operator but does the complete opposite
+//> Collects multiple elements and condenses it into an array
+//> ON THE LEFT SIDE OF THE =
+
+/*
+
+//________________________________________________________________________________________________________________
+
+const restaurant = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time, address }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
+    );
+  },
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}.`
+    );
+  },
+
+  orderPizza: function (mainIngredient, ...otherIngredient) {
+    console.log(mainIngredient);
+    console.log(otherIngredient);
+  },
+
+  openingHours: {
+    thu: {
+      open: 12,
+      close: 22,
+    },
+    fri: {
+      open: 11,
+      close: 23,
+    },
+    sat: {
+      open: 0, // Open 24 hours
+      close: 24,
+    },
+  },
+};
+
+//________________________________________________________________________________________________________________
+
+//! OVERALL DESTRUCTURING & REST
+
+//! Example using destructuring (left hand side)
+//a and b will take become VARIABLES for 1 and 2
+//others will become an array of 3,4,5
+//called REST b/c it will take the REST of the variables/elements when destructuring
+const [a, b, ...others] = [1, 2, 3, 4, 5];
+console.log(a, b, others);
+
+//! Another example:
+//Creating an array of the ENTIRE menu
+//Lets say that we want the 1st and third element from the main menu (pizza, risotto)
+const [pizza, , risotto, ...otherFood] = [...restaurant.mainMenu, ...restaurant.starterMenu]
+console.log(pizza, risotto, otherFood);
+
+//> Note that it doesn't include any skipped elements and only includes elements after the last variable (should be the last in the destructuring assignment)
+
+//! Destructuring Objects
+//Working with our opening hours -> creating an object with only our weekdays (thu, fri)
+//> REMEMBER in destructuring ORDER DOES NOT MATTER
+//THEREFORE, put the saturday object into its own variable (sat using destructuring) -> use REST operator to group up the REST of the objects (thu,fri) into their own object
+const { sat, ...weekDays } = restaurant.openingHours;
+console.log(sat, weekDays);
+
+//________________________________________________________________________________________________________________
+
+//! FUNCTIONS & REST
+//What if we wanted an arbritrary amount of arguments to use within the function? Example:
+//add(1,2,3,54,5,6);
+//add(1,2,4)
+
+//> We can use the rest operator (REST ARGUMENTS)
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  console.log(numbers);
+  console.log(sum);
+}
+
+add(1, 2, 2, 3, 4, 5,);
+add(1, 2, 3, 34, 5);
+add(1, 3,);
+
+//> We can also do this using the SPREAD operator:
+const x = [23, 5, 7];
+add(...x);
+//Argument for add is going to be SPREAD (removes array and spreads elements apart) but IMMEDIATELY COLLECTED using rest operator (collects elements and forms an array)
+//UNPACKING USING SPREAD -> PACKING UP USING REST
+
+//>This means that this function can take both arrays and normal element inputs as arguments
+
+//________________________________________________________________________________________________________________
+
+//! Restaurant Example:
+//Writing the orderPizza function inside of the restaurant object
+
+//>The first argument contains the main ingredient variable
+//The REST of the arguments will be packed up into a variable/array called otherIngredients
+restaurant.orderPizza('Pepperoni (mainIngredient)', 'Onion', 'Fish', 'Sausig');
+
+//> If there is only one argument
+restaurant.orderPizza('Pepperoni (mainIngredient)');
+//The mainIngredient variable will contain pepperoni
+//The otherIngredients array will be empty (there is nothing to collect but it will still return an empty array)
+*/
+
+//________________________________________________________________________________________________________________
+
+//? Short Circuiting (&& and ||)
+
+//> 3 Properties of Logical operators:
+//! They don't have to use boolean types (true or false)
+//Use ANY data type
+//Return ANY data type
+//SHORT CIRCUITING
+
+//> OR OPERATOR (||)
+//! Short circuiting means that if the used values are NOT BOOLEAN -> if first evaluated value is TRUTHY -> Immediately return that value
+//3 and 'Jonas' are NOT BOOLEAN types -> 3 is evaluated first -> 3 is truthy -> 3 is returned
+
+console.log(3 || 'Jonas'); //3
+console.log('' || 'Jonas');//Jonas -> '' is falsy value and so Jonas was evaluated instead which is not a false value
+console.log(true || 0); //True -> evaluated first and it was true so it skips 0
+console.log(undefined || null); //null -> undefined is falsy -> skips undefined -> null is evaluated and returned (happens eitherway, even if null is a falsy value)
+
+console.log(0 || undefined || null || 'Hello' || 23 || '');//Will return 'Hello' b/c it is the first truthy value encountered
+//! It will shortcircuit the entire evaluation after finding its first truthy value and then return said value

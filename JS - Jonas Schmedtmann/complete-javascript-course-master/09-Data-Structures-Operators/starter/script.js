@@ -424,12 +424,12 @@ const guestCorrect = restaurant.numGuests ?? 10;
 console.log(guestCorrect); //Returns 0
 
 //! ?? works with NULLISH values -> null and undefined
-//Only nullish values will shortcircuit the expression 
+//Only nullish values will shortcircuit the expression
 */
 //________________________________________________________________________________________________________________
 
 //? Logical Assignment Operators
-
+/*
 //Creating 2 new restaurant objects
 //! Let's pretend that we got these objects from an API and want to set a default number of guests for restaurants that dont have that property
 // BAsically adding that property to restaurants that dont have them
@@ -475,3 +475,40 @@ rest2.owner = rest2.owner && '<ANONYMOUS>';
 //Basically replaces the value if the element is currently truthy
 rest1.owner &&= '<ANONYMOUS>'
 rest2.owner &&= '<ANONYMOUS>'
+*/
+
+//?________________________________________________________________________________________________________________
+
+//? Looping Arrays: The for-of Loop
+
+//Creating a large array consisting of restaurant menus:
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+
+//> Instead of the for loop -> we can use a for-of loop (kinda like for-each)
+//For every item of menu -> log that item -> move onto next item
+for (const item of menu) {
+  console.log(item)
+};
+
+//! What if we wanted the index of the items?
+for (const item of menu.entries()) {
+  console.log(item);
+}
+
+console.log([...menu.entries()]);
+//! .entries() basically creates arrays for each item along with their associated index ex: [0, 'foccacia']
+//We can make the code above alot simpler now because we know that .entries() returns an array of the item's index and value
+//We can use DESTRUCTURING to destructure both the index and the value
+
+for (const [index, value] of menu.entries()) {
+  console.log(`${index + 1}: ${value}`);
+}
+
+// 1: Focaccia
+// 2: Bruschetta
+// 3: Garlic Bread
+// 4: Caprese Salad
+// 5: Pizza
+// 6: Pasta
+// 7: Risotto
+

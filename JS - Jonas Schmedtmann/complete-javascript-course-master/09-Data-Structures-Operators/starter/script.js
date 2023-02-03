@@ -1,5 +1,22 @@
 'use strict';
 
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  [weekdays[5]]: {
+    open: 0, // Open 24 hours
+    close: 24,
+  }
+};
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
@@ -28,20 +45,8 @@ const restaurant = {
     console.log(otherIngredient);
   },
 
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
+  openingHours,
+
 };
 
 // Data needed for a later exercise
@@ -477,7 +482,7 @@ rest1.owner &&= '<ANONYMOUS>'
 rest2.owner &&= '<ANONYMOUS>'
 */
 
-//?________________________________________________________________________________________________________________
+//________________________________________________________________________________________________________________
 
 //? Looping Arrays: The for-of Loop
 
@@ -512,7 +517,171 @@ for (const [index, value] of menu.entries()) {
 // 6: Pasta
 // 7: Risotto
 
-//?________________________________________________________________________________________________________________
+//________________________________________________________________________________________________________________
+
+//? Enchanced Object Literals
+//The restaurant object is an OBJECT LITERAL -> It was written using the object literal syntax
+
+/*
+
+//>Let's say that we want an object 'openingHours' to be within the restaurant 2 object
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+
+const restaurant2 = {
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time, address }) {
+    console.log(
+      `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
+    );
+  },
+
+  orderPasta: function (ing1, ing2, ing3) {
+    console.log(
+      `Here is your delicious pasta with ${ing1}, ${ing2}, and ${ing3}.`
+    );
+  },
+
+  orderPizza: function (mainIngredient, ...otherIngredient) {
+    console.log(mainIngredient);
+    console.log(otherIngredient);
+  },
+
+  //! Normally we would have to do this:
+  // openingHours: openingHours,
+
+  //! Using ENHANCED OBJECT LITERALS:
+  //ES6 will create an object based on the name automatically
+  openingHours,
+
+  //! Creating methods using enhanced object literals:
+  //Instead of:
+  // method: function(){
+  //   console.log('blahalvbahhaf');
+  // },
+
+  //We can just do this:
+  enhancedMethod() {
+    console.log('Both ways work');
+  },
+
+};
+*/
 
 
+//________________________________________________________________________________________________________________
+
+
+//? Optional Chaining(?.)
+//If a certain property doesn't exist, UNDEFINED will be returned
+//Combine this with the nullish operator to set "default values"
+
+/*
+//>Let's say that we want opening hours from monday:
+//mon doesn't actually exist at the moment -> We should check if it exists:
+//If it does exist -> log the opening hour from monday
+
+//! This is very messy and will only check 1 property -> we need a better solution
+//What if we aren't sure openingHours existed? -> && statement
+if (restaurant.openingHorus && restaurant.openingHours.mon) {
+  console.log(restaurant.openingHours.mon.open);
+};
+
+//> Using optional chaining:
+//(?.) if the .mon property exists then ONLY THEN will the .open property be read -> if NOT -> undefined
+console.log(restaurant.openingHours.mon?.open);
+//Both openinghours and .mon must exist for .open to be read
+console.log(restaurant.openingHours?.mon?.open);
+
+//> Example:
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+for (const day of days) {
+  console.log(day);
+
+  //! Remember the nullish operator -> sat open on 0 -> 0 falsy -> false -> nullish is then used
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day}, we are open on ${open}`);
+}
+
+//> Methods using the optioanl chaining
+//This method exists -> called using (0,1)
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+//This method does not exist -> returned as undefined -> nullish acknowledges undefined -> returns other set value
+console.log(restaurant.orderFood?.('meow') ?? 'Method does not exist');
+
+//> Chaining on Arrays (checking if empty)
+const users = [{ name: 'Jerry', email: 'Jerry@bouncymail.com' }];
+
+//If users[0] exists -> go to its name property -> IF IT DOESN'T -> returns undefined -> nullish short circuits -> auto return message
+console.log(users[0]?.name ?? 'User array empty');
+*/
+
+
+//________________________________________________________________________________________________________________
+
+
+//? Looping Objects: Object Keys, Values, and Entries
+// Using the for of loop we can loop over objects in an indirect way
+
+/*
+//> Looping over property names (Keys)
+
+//! Object.keys() returns an array of all the keys within the object put in as an argument
+const properties = Object.keys(openingHours);
+console.log(properties);
+let openStr = `We are open on ${properties.length} days:`;
+
+for (const day of properties) {
+  openStr += `${day},`
+}
+
+console.log(openStr);
+
+//________________________________________________________________________________________________________________
+
+//> Looping over property values:
+const values = Object.values(openingHours);
+console.log(values);
+
+//________________________________________________________________________________________________________________
+
+//> Looping over entire object
+
+//! To loop over the entire object, we use ENTRIES
+//Entries = Name + value (Key,value) pair
+
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+//! Destructuring "x" into variables from the entries
+//Key comes from the key (property name) -> value is actually an object -> Destructure immediately -> open and close are the variables for said values
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+
+*/
+
+//________________________________________________________________________________________________________________
 

@@ -85,7 +85,7 @@ btnHold.addEventListener('click', function () {
         scores[activeplayer] += currentScore;
         document.getElementById(`score--${activeplayer}`).textContent = scores[activeplayer];
         //2. Check if player's score is >= 100
-        if (scores[activeplayer] >= 20) {
+        if (scores[activeplayer] >= 50) {
             //Setting playing state to false
             playing = false;
             //Declaring the winner

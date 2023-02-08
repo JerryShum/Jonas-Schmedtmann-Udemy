@@ -14,7 +14,7 @@ const openingHours = {
   [weekdays[5]]: {
     open: 0, // Open 24 hours
     close: 24,
-  }
+  },
 };
 
 const restaurant = {
@@ -46,7 +46,6 @@ const restaurant = {
   },
 
   openingHours,
-
 };
 
 // Data needed for a later exercise
@@ -262,7 +261,6 @@ console.log(restaurant.name);
 
 //________________________________________________________________________________________________________________
 
-
 //? Rest Pattern and Rest Parameters
 //> Looks exactly like the spread operator but does the complete opposite
 //> Collects multiple elements and condenses it into an array
@@ -341,7 +339,6 @@ restaurant.orderPizza('Pepperoni (mainIngredient)');
 */
 
 //________________________________________________________________________________________________________________
-
 
 //? Short Circuiting (&& and ||)
 
@@ -492,8 +489,8 @@ const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 //> Instead of the for loop -> we can use a for-of loop (kinda like for-each)
 //For every item of menu -> log that item -> move onto next item
 for (const item of menu) {
-  console.log(item)
-};
+  console.log(item);
+}
 
 //! What if we wanted the index of the items?
 for (const item of menu.entries()) {
@@ -589,9 +586,7 @@ const restaurant2 = {
 };
 */
 
-
 //________________________________________________________________________________________________________________
-
 
 //? Optional Chaining(?.)
 //If a certain property doesn't exist, UNDEFINED will be returned
@@ -638,9 +633,7 @@ const users = [{ name: 'Jerry', email: 'Jerry@bouncymail.com' }];
 console.log(users[0]?.name ?? 'User array empty');
 */
 
-
 //________________________________________________________________________________________________________________
-
 
 //? Looping Objects: Object Keys, Values, and Entries
 // Using the for of loop we can loop over objects in an indirect way
@@ -685,3 +678,235 @@ for (const [key, { open, close }] of entries) {
 
 //________________________________________________________________________________________________________________
 
+//? Sets
+//Basically just a collection of UNIQUE values
+//Sets are also iterable
+//Unique values
+//Non-Ordered (it doesn't matter)
+
+/*
+//> Creating a set
+
+//! Must pass in an iterable (Array, string, etc.) into new Set()
+const ordersSet = new Set(['Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza'
+]);
+
+//! All duplicates are gone when logged to the console
+console.log(ordersSet);
+
+//! Set with a string input:
+console.log(new Set('String'));
+
+//________________________________________________________________________________________________________________
+
+//> Working with Sets
+
+//! Size of a set:
+console.log(ordersSet.size);
+
+//! Checking if something is in a set:
+console.log(ordersSet.has('Pizza'));//True -> Has pizza
+console.log(ordersSet.has('Bread'));//False -> Does not have bread
+
+//! Adding an item to a set:
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread');
+
+//! Deleting an item from a set:
+ordersSet.delete('Risotto');
+
+console.log(ordersSet);
+
+//! Clearing all elements from a set:
+//ordersSet.clear();
+
+//! How do we retrieve a value from a set?
+//There is no reason to -> It is both unique and unordered -> no real reason to retrieve -> Just use an array if need to retrieve values
+
+//! Looping over a set (Iterable):
+for (const order of ordersSet) {
+  console.log(order);
+}
+
+//________________________________________________________________________________________________________________
+
+//* The main use case of a set is to remove duplicate values from an ARRAY
+
+//> Example:
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+//What if for some reason we just wanted to know the unique positions of our restaurant -> we want a UNIQUE array
+
+//! Creating a new set/array:
+//The spread operator works on ALL ITERABLES -> works on sets -> spreads all values into a new array
+//This is creating a new Set based on the UNIQUE values from the STAFF array -> Spread operator spreads these values into an array separated by commas
+
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+
+//! We can just use the size -> we know how many unique positions there are
+console.log(new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size);//3
+
+//! We can do the same for a string -> Counting how many unique letters there are:
+console.log(new Set('Jerry Shum').size);//9 Unique letters
+*/
+
+//________________________________________________________________________________________________________________
+
+//? Maps: Fundamentals
+//Map is a data structure used to map values to keys (Similar to an object) -> Stored in key-value pairs -> can be ANY type
+
+/*
+//> Creating a map
+
+//! The best way to make a map is to make an EMPTY map
+const restMap = new Map();
+
+//! Adding to a map:
+//Using the .set method
+//The first value is the key, second is the value
+
+restMap.set('name', 'Classico Italiano');
+restMap.set(1, 'Firenze, Italy');
+
+//! The set method also RETURNS the map:
+console.log(restMap.set(2, 'Lisbon, Portugal'));
+
+//! This allows us to CHAIN set methods:
+
+restMap
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open! :D')
+  .set(false, 'We are closed! ):');
+
+
+//! Retrieving something from a set:
+//use a key as the argument
+//.get() method
+
+console.log(restMap.get('name')); //Classico Italiano
+console.log(restMap.get(true)); //We are open! :D
+
+//________________________________________________________________________________________________________________
+
+//! Example:
+//Let's say that we have some current time:
+const time = 21;
+
+//* These will return either a true or false value -> maps a value in the set ('We are open' or 'We are closed')
+console.log(restMap.get(time > restMap.get('open') && time < restMap.get('close'))); //'We are open! :D' (b/c time is between 11 and 23)
+
+//________________________________________________________________________________________________________________
+
+//! Checking if a set contains a certain key:
+restMap.has('categories'); //true
+
+//! Deleting elements from a map (keys)
+restMap.delete(2);
+
+//! Size property
+console.log(restMap.size);
+
+//! Clearing
+//restMap.clear()
+
+//________________________________________________________________________________________________________________
+
+//> Using an array as a key
+
+restMap.set([1, 2], 'Test');
+console.log(restMap.get([1, 2]));
+//! Returns undefined because the arrays aren't actually the same object in the HEAP (different objects)
+
+//Workaround:
+const arr = [1, 2];
+//Use arr as the key instead of manually making an array
+//This works because they both refer to the same place in memory
+
+//________________________________________________________________________________________________________________
+
+//> DOM elements as a key
+//The array just proves that we can use ANY object as a key -> even DOM elements
+
+restMap.set(document.querySelector('h1'), 'Heading');
+console.log(restMap);
+
+*/
+
+
+//________________________________________________________________________________________________________________
+
+
+//? Maps: Iteration
+//There is another way to input elements into a map (no set method) -> useful when there are many elements
+
+//! Creating a map
+//Creating a map -> passing in an array -> contains multiple arrays (keys, value)
+//Think of it as creating a quiz
+const question = new Map([
+  ['question', 'What is the best programming language in the world?'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [false, 'Try again'],
+  [true, 'Correct :DD'],
+]);
+
+console.log(question);
+
+console.log(Object.entries(openingHours));
+
+//! Creating a map in this fashion is somewhat better than using the set method
+//! It also creates somehting very similar to what we see using the Object.entries() method (an array of arrays containing keys and values)
+
+//> Converting an object into a map
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+//________________________________________________________________________________________________________________
+
+//> Iterating over a map (quiz app)
+//Using the same method of iterating over an object 
+//Destructuring our 'x' arrays into variables key and value from our question map
+//If key is a number (1,2,3) -> log 
+
+console.log(question.get('question'));
+
+for (const [key, value] of question) {
+
+  if (typeof key === 'number') {
+    console.log(`Answer ${key}: ${value}`);
+  }
+
+}
+
+//Prompting the user to give an answer (correct answer = 3)
+const answer = Number(prompt('Your answer?'));
+console.log(answer);
+
+//Checking if the answer is right and outputting the correct message
+//! Instead of doing this method:
+if (question.get('correct') === answer) {
+  console.log(question.get(true));
+}
+
+//! We can just do this:
+//We can do this because of the power of boolean values as question.get('correct') === answer will return either true or false depending on answer  
+console.log(question.get(question.get('correct') === answer));
+
+//________________________________________________________________________________________________________________
+
+//> Converting map back to an array
+//Basically using the spread operator to spread each value (arrays) back into an array of arrays (key,value)
+console.log([...question]);
+
+//! Maps also contain the .entries(), .keys(), and .values() methods
+
+//________________________________________________________________________________________________________________

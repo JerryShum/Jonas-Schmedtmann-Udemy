@@ -846,6 +846,7 @@ console.log(restMap);
 //? Maps: Iteration
 //There is another way to input elements into a map (no set method) -> useful when there are many elements
 
+/*
 //! Creating a map
 //Creating a map -> passing in an array -> contains multiple arrays (keys, value)
 //Think of it as creating a quiz
@@ -873,9 +874,9 @@ console.log(hoursMap);
 //________________________________________________________________________________________________________________
 
 //> Iterating over a map (quiz app)
-//Using the same method of iterating over an object 
+//Using the same method of iterating over an object
 //Destructuring our 'x' arrays into variables key and value from our question map
-//If key is a number (1,2,3) -> log 
+//If key is a number (1,2,3) -> log
 
 console.log(question.get('question'));
 
@@ -898,7 +899,7 @@ if (question.get('correct') === answer) {
 }
 
 //! We can just do this:
-//We can do this because of the power of boolean values as question.get('correct') === answer will return either true or false depending on answer  
+//We can do this because of the power of boolean values as question.get('correct') === answer will return either true or false depending on answer
 console.log(question.get(question.get('correct') === answer));
 
 //________________________________________________________________________________________________________________
@@ -910,3 +911,61 @@ console.log([...question]);
 //! Maps also contain the .entries(), .keys(), and .values() methods
 
 //________________________________________________________________________________________________________________
+*/
+
+//? Working with Strings - Part 1
+
+const airline = `TAP Air Portugal`;
+const plane = `A320`;
+
+//Getting the character with their "index"
+console.log(plane[0]);//A
+console.log('B737'[0]);//B
+
+console.log(airline.length);
+console.log(`B737`.length);
+
+console.log(airline.indexOf('r'));//FIRST index of 'r' //6
+console.log(airline.lastIndexOf('r')); //LAST INDEX = 10
+console.log(airline.indexOf('Portugal'));//Searching for an entire word
+
+//> Slice method to extract parts of a string (SUB STRINGS)
+//Returns a new string
+//(begin, end) parameters
+console.log(airline.slice(4)); //Air Portugal
+console.log(airline.slice(4, 7)); //Air
+
+//! Extracting without hardcoding indices
+console.log(airline.slice(0, airline.indexOf(' '))); //TAP
+//Beginning = 0, extract until you encounter a space
+console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //Portugal
+console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //Portugal
+//Start at the last space found and extract until the end of the string
+
+//! Negative parameter input
+//* Negative begin parameter
+console.log(airline.slice(-2));//al
+//Starting at the end and extracting the last two characters
+//* Negative end parameter
+console.log(airline.slice(1, -1));//AP Air Portuga
+//Starts at 1 (A) and then -2 cuts off the last character of the string
+
+//________________________________________________________________________________________________________________
+
+//> Writing a function 
+const checkMiddleSeat = function (seat) {
+  //B and E are the middle seats
+  const s = seat.slice(-1);
+  if (s === 'B' || s === 'E') {
+    console.log('You got the middle seat.');
+  } else {
+    console.log('You did not get a middle seat.');
+  }
+}
+
+checkMiddleSeat('11B');
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+
+//! The reason why strings have methods even though they are primitives is because JS converts them into a STRING OBJECT which contains all of these methods for us to use inorder to manipulate said string and object
+console.log(typeof new String('Meow')); //object

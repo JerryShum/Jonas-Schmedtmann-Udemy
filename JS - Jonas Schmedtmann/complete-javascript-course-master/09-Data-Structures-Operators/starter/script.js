@@ -1062,3 +1062,49 @@ checkBaggage('I have some food and a gun.'); //NO
 
 //________________________________________________________________________________________________________________
 
+//> The SPLIT method
+// Allows us to split a string into multiple parts based on a divider string
+
+console.log('a+very+nice+string'.split('+'));
+//We have defined a string with multiple plus signs, the .split method will split the string based on where the + are
+//Results are stored in an array
+
+console.log('Jerry Shum'.split(' '));
+
+//! We can use destructuring to assign these values to variables
+const [firstName, lastName] = 'Jerry Shum'.split(' ');
+console.log(firstName, lastName);
+
+
+//> The JOIN method
+//The opposite of split
+
+//! What if we wanted to add 'Mr.' to the first name, and make the lastname uppercase?
+//Joining all our values using an array and the .join method
+
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+
+console.log(newName);
+
+//________________________________________________________________________________________________________________
+
+//> Example:
+
+//! What if we want to capitalize names:
+
+const capitalizeName = function (name) {
+  //Will split each string into an array with individual values
+  const names = name.split(' ');
+  //Defining a new array to PUSH fixed words into
+  const namesUpper = [];
+
+  for (const word of names) {
+    //Takes the first character of the word in the array and makes it capitalized 
+    //And then rejoins that capitalized character with the other characters (slice)
+    namesUpper.push(word[0].toUpperCase() + word.slice(1));
+  }
+  console.log(namesUpper.join(' '));
+};
+
+capitalizeName('jessica ann smith');
+capitalizeName('jerry shum')

@@ -969,3 +969,96 @@ checkMiddleSeat('3E');
 
 //! The reason why strings have methods even though they are primitives is because JS converts them into a STRING OBJECT which contains all of these methods for us to use inorder to manipulate said string and object
 console.log(typeof new String('Meow')); //object
+
+//________________________________________________________________________________________________________________
+
+//> String Methods
+
+//Uppercase and Lowercase methods
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+//! Fix capitalization in name
+//You can also make a function that does this to fix the capitalization of a string
+const passenger = 'JoNaS';
+
+//Make it all into lower case:
+const passengerLower = passenger.toLowerCase();
+
+//Use the all lowercase string, convert first letter to uppercase, slice passengerLower after first letter
+const passengerCorrect = passengerLower[0].toUpperCase() + passengerLower.slice(1);
+
+console.log(passengerCorrect); //Jonas
+
+//! Check/Comparing emails
+
+const email = 'hello@jonas.io';
+const loginEmail = '  Hello@Jonas.IO \n';
+
+// //Convert everything to lowercase
+// const lowerEmail = loginEmail.toLowerCase();
+
+// //Removing all empty spaces and enter
+// const trimmedEmail = lowerEmail.trim();
+
+// console.log(trimmedEmail);
+//* Trimstart and trimend will trim stuff from only the start and end of the string
+
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);
+//Since string methods IMMEDIATELY return a string, we are allowed to CHAIN methods
+
+//________________________________________________________________________________________________________________
+
+//! Replacing parts of strings
+
+//Replacing characters
+const priceEU = `288,97£`;
+const priceUS = priceEU.replace('£', '$').replace(',', '.');
+console.log(priceUS);
+
+//Replacing words
+const announcement = 'All passengers come to boarding door23, Boarding door 23!';
+console.log(announcement.replace('door', 'gate'));
+//Will only replace the FIRST OCCURENCE of the words
+//! WE USE REPLACEALL
+
+//________________________________________________________________________________________________________________
+
+//! Booleans
+
+//* Includes method
+const plane2 = 'Airbus A320neo';
+console.log(plane2.includes('A320')); //true
+console.log(plane2.includes('Boeing')); //false
+
+//* startswith method
+console.log(plane2.startsWith('Air')); //true since Air is Adjacent to eachother but if it was Aib it would not work since they are not adjacent
+
+//> Example:
+if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+  console.log('Part of the new airbus family');
+}
+
+//> Practice:
+//Chekcing if baggage is allowed to be checked in
+const checkBaggage = function (items) {
+
+  //! Put string into lowercase (ESSENTIAL)
+  const baggage = items.toLowerCase();
+
+
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are not allowed onboard');
+  } else {
+    console.log('You are ok!');
+  }
+}
+
+checkBaggage('I have some food, a knife, and a laptop.'); //NO
+checkBaggage('I have some socks and a camera'); //YES
+checkBaggage('I have some food and a gun.'); //NO
+
+//________________________________________________________________________________________________________________
+

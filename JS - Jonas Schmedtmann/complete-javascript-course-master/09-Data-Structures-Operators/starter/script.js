@@ -1101,10 +1101,59 @@ const capitalizeName = function (name) {
   for (const word of names) {
     //Takes the first character of the word in the array and makes it capitalized 
     //And then rejoins that capitalized character with the other characters (slice)
-    namesUpper.push(word[0].toUpperCase() + word.slice(1));
+    // namesUpper.push(word[0].toUpperCase() + word.slice(1));
+
+    //OR:
+    //In each iteration of the loop, it loops through the names array, -> for the current value, it takes the first character of the word/name and replaces it with the capitalized version
+    namesUpper.push(word.replace(word[0], word[0].toUpperCase()));
   }
+  //Reverses the split function and joins the values of the array together with ' ' in between each value
   console.log(namesUpper.join(' '));
 };
 
 capitalizeName('jessica ann smith');
 capitalizeName('jerry shum')
+
+//________________________________________________________________________________________________________________
+
+//> Padding a String
+//Adding a number of characters to a string until the DESIRED LENGTH
+
+//Creating a message
+const message = 'Go to gate 23!';
+//At the start of message, we want to PAD until 25 characters have been reached, we use the '+' character until 25 has been reached
+console.log(message.padStart(25, '+'));
+//Same as padStart but padding at the end until 25 characters
+console.log('Jerry'.padEnd(25, '+'));
+
+//! Real World Example:
+//Credit card -> we never see the first characters and only see the last 4
+const maskCreditCard = function (number) {
+  //Instead of doing = String(number) we can do this: because the concatenation symbol automatically converts it into a string
+  const string = number + '';
+
+  //We want the last 4 characters of the number and then pad out the start
+  //Slice will create a separate string of the LAST 4 digits
+  const last4 = string.slice(-4);
+  return last4.padStart(string.length, '*');
+
+
+}
+console.log(maskCreditCard(123445678910123));
+console.log(maskCreditCard('123424324323424'));
+
+//________________________________________________________________________________________________________________
+
+//> Repeat Method
+//Allows us to repeat the same string multiple times
+
+const message2 = 'Bad Weather... All Departures Delayed...';
+
+//Will repeat message2 will repeat 5 times
+console.log(message2.repeat(5));
+
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${'✈'.repeat(n)}`);
+}
+
+planesInLine(5);

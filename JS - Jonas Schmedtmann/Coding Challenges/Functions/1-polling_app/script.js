@@ -17,9 +17,13 @@ const poll = {
                 alert('That is not a valid input. Please try again.')
             }
 
+
+
         } while (answer >= 3 && answer <= 0);
+
     },
 };
+
 
 document.querySelector('.poll').addEventListener('click', poll.registerNewAnswer.bind(poll));
 

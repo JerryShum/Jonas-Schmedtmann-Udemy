@@ -10,6 +10,18 @@ body {
     border-top: 10px solid #1098ad;
 }
 
+
+/*! THIS WILL AUTOMATICALLY CENTER OUR ARTICLE/WEBSITE TO THE MIDDLE OF THE SCREEN NO MATTER THE ASPECT RATIO  */
+
+/** Both the margins will be the same as the other when we set them as auto */
+.container {
+    width: 700px;
+    /* margin-left: auto;
+    margin-right: auto; */
+
+    margin: 0 auto;
+}
+
 .main-header {
     background-color: #f7f7f7;
     /* padding: 20px;
@@ -19,6 +31,7 @@ body {
     /* ShortHand: (first one is top and bottom , second is left and right*/
     padding: 20px 40px;
     margin-bottom: 60px;
+    height: 80px;
 }
 
 .post-header {
@@ -34,6 +47,7 @@ aside {
     border-top: 5px solid #1098ad;
     border-bottom: 5px solid #1098ad;
     padding: 50px 0;
+    width: 500px;
 }
 
 h1,
@@ -162,6 +176,11 @@ a:hover {
 a:active {
     background-color: black;
     font-style: italic;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
 }
 
 /*! Always defined in this order LVHA */

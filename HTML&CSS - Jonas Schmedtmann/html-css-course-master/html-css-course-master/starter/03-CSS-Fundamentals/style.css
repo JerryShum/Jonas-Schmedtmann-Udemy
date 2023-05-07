@@ -226,3 +226,32 @@ footer p {
 } */
 
 /*--------------------------------------*/
+
+/*? Pseudo Elements & Adjacent Sibling */
+
+/* Pseudo Element that selects the first letter */
+h1::first-letter {
+    font-style: normal;
+    margin-right: 5px;
+}
+
+/* Adjacent sibling -> the next element within the same parent -> h3 next element is p -> first line of p is red */
+h3+p::first-line {
+    /* color: red; */
+}
+
+h2 {
+    position: relative;
+}
+
+h2::after {
+    content: "TOP";
+    background-color: #ffe70e;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+
+}

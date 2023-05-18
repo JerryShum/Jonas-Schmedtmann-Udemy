@@ -27,7 +27,7 @@ body {
   padding-left: 40px;
   padding-right: 40px; */
   padding: 20px 40px;
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
   /* height: 80px; */
 }
 
@@ -37,7 +37,7 @@ nav {
 }
 
 article {
-  margin-bottom: 60px;
+  /* margin-bottom: 60px; */
 }
 
 .post-header {
@@ -199,7 +199,7 @@ nav a:link {
   display: block; */
 
   margin-right: 30px;
-  margin-top: 10px;
+
   display: inline-block;
 }
 
@@ -269,13 +269,13 @@ nav p {
 } */
 
 
-/*? Floats  */
+/* ? Floats  */
 
 /* Places an element on the left or right side of the container and allows other elements to wrap around it -> removed from normal flow of the page */
 
 /* basically removed the element from its parents -> parent might not have any height or might look different once an element is floated -> COLLAPSED HEIGHT */
 
-.author-img {
+/* .author-img {
   float: left;
   margin-bottom: 20px;
 }
@@ -297,22 +297,22 @@ nav {
 
 .clear {
   clear: both;
-}
+} */
 
 /*! CLEAR FIX HACK: (avoids empty divs to fix a collapsed height) */
 
 /* after pseudoelement basically creates a child element within the parent -> must define a content -> starts off as an in-line element -> clearing floats only works on block -> change to block*/
 
-.clearfix::after {
+/* .clearfix::after {
   clear: both;
   content: "";
   display: block;
-}
+} */
 
 
 /*? CREATING A FLOAT LAYOUT */
 
-article {
+/* article {
   width: 825px;
   float: left;
 }
@@ -320,14 +320,103 @@ article {
 aside {
   width: 300px;
   float: right;
-}
+} */
 
 /* footer is affected by the float (wrong position) -> must clear float */
 /* No need to create a new element since we already have an element of which we want to clear */
-footer {
+
+/* footer {
   clear: both;
-}
+} */
 
 /*! BORDERBOX -> assigned width is fixed -> padding wont change the width of the box -> instead it will make the content width smaller */
 
 /*! SHOULD BE APPLIED AT THE START TO EVERY ELEMENT */
+
+
+/*? Flexbox */
+
+/* What is the flex container? -> the parent of the 2 things we need side by side -> main header = h1 and nav*/
+
+.main-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+/* Flex container -> parent of img and author info -> create one yourself*/
+
+.author {
+  margin-bottom: 0;
+  margin-left: 15px;
+}
+
+.author-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Flex container */
+.related-post {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 30px;
+
+}
+
+.related-link:link {
+  font-size: 17px;
+  font-weight: bold;
+  font-style: normal;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.related-author {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: italic;
+}
+
+/*? FLEX LAYOUT FOR RELATED POST AND ARTICLE */
+
+/* .row-flex {
+  display: flex;
+  gap: 75px;
+  align-items: flex-start;
+}
+
+aside {
+  flex: 0 0 300px;
+}
+
+article {
+  flex: 0 0 825px;
+} */
+
+
+/*? CSS GRID LAYOUT */
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  column-gap: 75px;
+  row-gap: 60px;
+  align-items: start;
+}
+
+.main-header {
+  grid-column: 1/span2;
+}
+
+article {}
+
+aside {}
+
+footer {
+  grid-column: 1/span2;
+}

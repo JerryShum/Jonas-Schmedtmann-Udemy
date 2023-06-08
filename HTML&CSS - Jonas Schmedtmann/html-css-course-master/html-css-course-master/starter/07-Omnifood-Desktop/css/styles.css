@@ -1,0 +1,809 @@
+/* 
+
+--- 01 TYPOGRAPHY SYSTEM
+
+- FONT SIZE SYSTEM (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
+- FONT WEIGHTS: 
+Default: 400
+Medium: 500
+Semi-bold: 600
+Bold: 700
+
+- LINE HEIGHTS:
+Default: 1
+Small: 1.05
+Paragraph: 1.6
+
+-LETTER SPACING
+neg 0.5px
+0.75px
+
+
+--- 02 COLORS
+
+- Primary: #e67e22
+
+- Tints: 
+#fdf2e9
+- Shades:
+#cf711f
+
+- Accents:
+- Greys:
+#555
+#333
+#6f6f6f -> lightest grey allowed on #fdf2e9
+
+--- 05 SHADOWS
+
+box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+
+--- 06 BORDER RADIUS
+
+Default: 9px
+
+--- 07 WHITE SPACE
+
+- SPACING SYSTEM (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+
+*/
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/*? SETTING THE HTML FONTSIZE CHANGES THE REM SIZING  */
+html {
+    /* font-size: 10px;  AVOID THIS B/C IT CONFLICTS WITH PEOPLE WHO CHANGE THE DEFAULT FONT SIZE OF THEIR BROWSERS*/
+    /* 10 / 16 = 0.625 -> 62.5% */
+
+    /*! Do this to so that it will always adjust to ANY DEFAULT FONT SIZE (not only 10px) */
+    font-size: 62.5%;
+}
+
+body {
+    /*! Setting our basic parameters  */
+    font-family: "Rubik", sans-serif;
+    line-height: 1;
+    font-weight: 400;
+    color: #555;
+}
+
+
+/* --------------------------------- */
+/* HEADER */
+/* --------------------------------- */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: #fdf2e9;
+
+    /* We use fixed height b/c we want it to be "sticky" -> we dont use padding */
+    height: 9.6rem;
+    padding: 0 4.8rem;
+}
+
+.logo {
+    height: 2.2rem;
+}
+
+/* --------------------------------- */
+/* NAVIGATION */
+/* --------------------------------- */
+
+.main-nav-list {
+    display: flex;
+    align-items: center;
+    gap: 3.2rem;
+
+    list-style: none;
+}
+
+.main-nav-link:link,
+.main-nav-link:visited {
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 1.8rem;
+
+    /*! This must be put on the original state (link) */
+    transition: all 0.3s;
+
+}
+
+.main-nav-link:active,
+.main-nav-link:hover {
+    color: #cf711f;
+}
+
+/*! We do this b/c we want it to ALWAYS BE APPLIED when compared to other classes (more priority) */
+.main-nav-link.nav-cta:link,
+.main-nav-link.nav-cta:visited {
+    padding: 1.2rem 2.4rem;
+    border-radius: 9px;
+    color: white;
+    background-color: #e67e22;
+}
+
+.main-nav-link.nav-cta:hover,
+.main-nav-link.nav-cta:active {
+
+    background-color: #cf711f;
+}
+
+/* --------------------------------- */
+/* HERO SECTION */
+/* --------------------------------- */
+.section-hero {
+    background-color: #fdf2e9;
+    padding: 4.8rem 0 9.6rem 0;
+}
+
+.hero {
+    /*! We made this hero div to give the container a FIXED WIDTH */
+    max-width: 130rem;
+
+    /*! This will center the container in the viewport  */
+    margin: 0 auto;
+
+    /* Adding padding to help with viewport formatting (if its too small so it doesnt stick to window edge) */
+    padding: 0 3.2rem;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9.6rem;
+    align-items: center;
+
+}
+
+
+.hero-description {
+    font-size: 2rem;
+    line-height: 1.6;
+    margin-bottom: 4.8rem;
+}
+
+.hero-image {
+    width: 100%;
+}
+
+.delivered-meals {
+    display: flex;
+
+    align-items: center;
+    gap: 1.6rem;
+    margin-top: 8rem;
+}
+
+/* If we want to overlap some of the images, we cant add a -gap value -> must work with the img elements themselves*/
+.delivered-imgs {
+    display: flex;
+}
+
+.delivered-imgs img {
+    height: 4.8rem;
+    width: 4.8rem;
+    border-radius: 50%;
+
+    /* This will pull the images 16 px left */
+    margin-right: -1.6rem;
+
+    /* Adding border for more visibility */
+    border: 3px solid #fdf2e9;
+}
+
+/* Gap wasn't working b/c of the margin pulling the end of the container 16 px left, -> set margin to 0 for the last img */
+.delivered-imgs img:last-child {
+    margin: 0;
+}
+
+.delivered-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.delivered-text span {
+    font-weight: 700;
+    color: #cf711f;
+}
+
+/* --------------------------------- */
+/* FEATURED IN SECTION */
+/* --------------------------------- */
+
+.section-featured {
+    padding: 4.8rem 0 3.2rem 0;
+}
+
+.heading-featured-in {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    letter-spacing: 0.75px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 2.4rem;
+}
+
+.logos {
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.logo-img {
+    height: 3.2rem;
+
+    /** COMBINATION OF THESE 2 img manipulation will make it grey  */
+    filter: brightness(0);
+    opacity: 60%;
+}
+
+/* --------------------------------- */
+/* HOW IT WORKS SECTION */
+/* --------------------------------- */
+
+.section-how {
+    padding: 9.6rem 0;
+}
+
+.step-number {
+    font-size: 8.6rem;
+    font-weight: 600;
+    color: #ddd;
+    margin-bottom: 1.2rem;
+}
+
+.step-description {
+    font-size: 1.8rem;
+    line-height: 1.8;
+}
+
+.step-img-box {
+    display: flex;
+    position: relative;
+
+    align-items: center;
+    justify-content: center;
+
+}
+
+/** ADDING A PSEUDO ELEMENT TO BECOME A CIRCLE BEHIND THE IMGS  */
+.step-img-box::before,
+.step-img-box::after {
+    content: "";
+    display: block;
+
+    background-color: #fdf2e9;
+
+    /** Placing element behind phone using absolute */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+
+}
+
+.step-img-box::before {
+    width: 60%;
+    /* height: 60%; */
+
+    /* We do this b/c height doesnt actually add any value to the height */
+    /* 60% of parents width */
+    padding-bottom: 60%;
+
+    /**  z index is image/layer priority */
+    z-index: -2;
+}
+
+.step-img-box::after {
+    width: 45%;
+    padding-bottom: 45%;
+    z-index: -2;
+    background-color: #e67e22;
+}
+
+.step-img {
+    width: 35%;
+}
+
+/* --------------------------------- */
+/* MEALS SECTION */
+/* --------------------------------- */
+
+.section-meals {
+    padding: 9.6rem 0;
+}
+
+.meal {
+    box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.075);
+    border-radius: 12px;
+
+    /** REALLY IMPORTANT -> whatever is overflowing from this container is hidden*/
+    overflow: hidden;
+
+    /** Must use transition on "parent" element -> this animates the cards  */
+    transition: all 0.4s;
+
+}
+
+.meal:hover {
+    transform: translate(0, -1rem);
+    box-shadow: 0 3.2rem 6.4rem rgba(0, 0, 0, 0.05);
+}
+
+.meal-content {
+    /** 3.2rem padding on top and 4.8 on all other sides  */
+    padding: 3.2rem 4.8rem 4.8rem 4.8rem;
+}
+
+.meal-tags {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.4rem 0.8rem;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    color: #333;
+    border-radius: 100px;
+    font-weight: 600;
+}
+
+.tag--vegetarian {
+    background-color: #51cf66;
+
+}
+
+.tag--vegan {
+    background-color: green;
+}
+
+.tag--paleo {
+    background-color: aquamarine;
+}
+
+.meal-title {
+    font-size: 2rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 3.2rem;
+}
+
+.meal-attributes {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    list-style: none
+}
+
+.meal-attribute {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    font-size: 1.8rem;
+
+}
+
+.meal-icon {
+    height: 2.4rem;
+    width: 2.4rem;
+    color: #cf711f;
+}
+
+.meal-img {
+    width: 100%;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+
+    list-style: none;
+
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+
+    font-size: 1.8rem;
+}
+
+.list-icon {
+    height: 3rem;
+    width: 3rem;
+    color: #e67e22;
+}
+
+.all-recipes {
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+/* --------------------------------- */
+/* TESTIMONIALS SECTION */
+/* --------------------------------- */
+
+.section-testimonials {
+    display: grid;
+
+    /** Trick with FR is to think of it like percentages -> 55% of container and 45% of container  */
+    grid-template-columns: 55fr 45fr;
+
+    /*This fixes weird spacing when viewport is smaller */
+    align-items: center;
+
+    background-color: #fdf2e9;
+}
+
+.testimonial-container {
+    padding: 9.6rem;
+}
+
+.testimonials {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 4.8rem;
+    column-gap: 9.6rem;
+
+}
+
+.testimonial-img {
+    width: 6.4rem;
+    border-radius: 50%;
+    margin-bottom: 1.2rem;
+}
+
+.testimonial-text {
+    font-size: 1.8rem;
+    line-height: 1.8;
+    margin-bottom: 1.6rem;
+}
+
+.testimonial-name {
+    font-size: 1.6rem;
+    color: #6f6f6f;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+
+    padding: 1.6rem;
+}
+
+.gallery-item {
+    /* We use this b/c when the images are scaled higher -> they overflow the grid container */
+    overflow: hidden;
+}
+
+.gallery-item img {
+    /* WE do this b/c there is a little white space around imgs b/c they are inline by default */
+    display: block;
+
+    /* In order to fix scaling issues (they are too huge) we need to make them FLEXIBLE -> width 100% */
+    width: 100%;
+    transition: all 0.5s;
+}
+
+
+/** Hover effect: */
+.gallery-item img:hover {
+    transform: scale(1.1);
+}
+
+/* --------------------------------- */
+/* PRICING SECTION */
+/* --------------------------------- */
+
+.section-pricing {
+    padding: 9.6rem 0;
+}
+
+.pricing-plan {
+    border-radius: 12px;
+    width: 75%;
+}
+
+.pricing-plan-starter {
+    justify-self: end;
+
+    /* Small issue related to this border -> 2px will change the dimensions -> compensate with padding difference */
+    border: 2px solid #fdf2e9;
+    padding: 4.6rem;
+
+}
+
+.pricing-plan-complete {
+    background-color: #fdf2e9;
+    padding: 4.8rem;
+
+
+    position: relative;
+    overflow: hidden;
+
+}
+
+
+/** Making a "Best Value" ribbon */
+.pricing-plan-complete:after {
+    content: "Best Value";
+    position: absolute;
+    top: 5%;
+    right: -10%;
+
+    text-transform: uppercase;
+    font-size: 1.4rem;
+    font-weight: 700;
+    background-color: yellowgreen;
+    padding: 0.8rem 4rem;
+    transform: rotate(45deg);
+
+}
+
+.plan-header {
+    text-align: center;
+    margin-bottom: 4.8rem;
+}
+
+.plan-name {
+    color: #cf711f;
+    font-weight: 600;
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.75;
+    margin-bottom: 3.2rem;
+}
+
+.plan-price {
+    font-size: 6.2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1.6rem;
+}
+
+.plan-text {
+    font-size: 1.6rem;
+    line-height: 1.6;
+    font-weight: 500;
+    color: #777;
+}
+
+.plan-price span {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-right: .8rem;
+}
+
+.plan-signup {
+    text-align: center;
+    margin-top: 4.8rem;
+}
+
+.plan-details {
+    text-align: center;
+    font-size: 1.6rem;
+    line-height: 1.6;
+}
+
+.feature-icon {
+    color: #e67e22;
+    height: 2.4rem;
+    width: 2.4rem;
+    margin-bottom: 3.2rem;
+
+    background-color: #fdf2e9;
+    padding: 1.2rem;
+    border-radius: 50%;
+}
+
+.feature-title {
+
+    font-size: 2.4rem;
+    color: #333;
+    font-weight: 700;
+    margin-bottom: 1.6rem;
+}
+
+.feature-text {
+    font-size: 1.8rem;
+    line-height: 1.8;
+}
+
+/* --------------------------------- */
+/*  CTA SECTION */
+/* --------------------------------- */
+
+.section-cta {
+    margin: 4.8rem 0 12.8rem 0;
+}
+
+.cta {
+    display: grid;
+    grid-template-columns: 66.666fr 33.333fr;
+    /* background-color: #e67e22; */
+
+    background-image: linear-gradient(to right bottom, #eb984e, #e67e22);
+
+    box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.15);
+    border-radius: 1.2rem;
+    overflow: hidden;
+
+}
+
+.cta-text-box {
+    padding: 4.8rem 6.4rem 6.4rem 6.4rem;
+    color: #45260a;
+}
+
+.cta .heading-secondary {
+    color: #45260a;
+    margin-bottom: 3.2rem;
+}
+
+.cta-text {
+    font-size: 1.8rem;
+    line-height: 1.8;
+    margin-bottom: 4.8rem;
+}
+
+.cta-img-box {
+    background-image: linear-gradient(to right bottom,
+            rgba(235, 152, 78, 0.35), rgba(230, 125, 34, 0.35)),
+        url('../img/eating.jpg');
+    background-size: cover;
+    background-position: center;
+
+}
+
+.cta-form {
+    display: grid;
+    grid-template-columns: 50fr 50fr;
+    column-gap: 3.2rem;
+    row-gap: 2.4rem;
+}
+
+.cta-form label {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 500;
+    margin-bottom: 1.2rem;
+}
+
+.cta-form input,
+.cta-form select {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.8rem;
+
+    /** THIS MEANS THAT IT SHOULD INHERIT THE FONT FROM ITS PARENT ELEMENT */
+    font-family: inherit;
+    color: inherit;
+
+    border: none;
+    background-color: #fdf2e9;
+    border-radius: 8px;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+
+.cta-form input::placeholder {
+    color: #777;
+}
+
+/* --------------------------------- */
+/*  FOOTER SECTION */
+/* --------------------------------- */
+
+.footer {
+    padding: 12.8rem 0;
+    border-top: 1px solid #eee;
+}
+
+.grid--footer {
+    grid-template-columns: 1.5fr 1.5fr 1fr 1fr 1fr;
+}
+
+.logo-footer {
+    display: block;
+    margin-bottom: 3.2rem;
+}
+
+.logo-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.social-links {
+    display: flex;
+    gap: 2.4rem;
+
+    list-style: none;
+}
+
+.footer-logo {
+    height: 2.4rem;
+    width: 2.4rem;
+}
+
+.copyright {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    color: #767676;
+    margin-top: auto;
+}
+
+.footer-heading {
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin-bottom: 4rem;
+    color: #555;
+}
+
+.contacts {
+    font-style: normal;
+    font-size: 1.6rem;
+    line-height: 1.6;
+}
+
+.address {
+    margin-bottom: 2.4rem;
+    color: #767676;
+}
+
+.footer-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+
+    list-style: none;
+
+}
+
+.footer-link:link,
+.footer-link:visited {
+    text-decoration: none;
+    font-size: 1.6rem;
+    color: #767676;
+    transition: all 0.3s;
+}
+
+.footer-link:hover,
+.footer-link:active {
+    color: #555;
+}
+
+/* 
+.test {
+    background-color: red;
+    padding: 100px;
+    width: 1000px;
+
+    Max width will change depending on viewport width -> element will be 1000px and will adapt to any smaller viewports -> 100% of container element width
+    max-width: 1000px;
+
+    REM -> root element font size -> defined in HTML file (default = 16px) -> if this is changed, all elements using rem sizing will also change 
+    1 rem = 16px -> 50 rem = 800px
+    max-width: 50rem;
+    padding: 4rem;
+    color: white;
+    font-size: 2rem;
+} */

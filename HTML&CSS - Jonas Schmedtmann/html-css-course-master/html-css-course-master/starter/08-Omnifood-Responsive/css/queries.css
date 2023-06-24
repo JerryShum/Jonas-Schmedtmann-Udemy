@@ -1,0 +1,361 @@
+/*! rem and em do NOT depend on html font-size in media queries! Instead, 1rem = 1em = 16px */
+
+/**************************/
+/* BELOW 1344px (smaller desktops) */
+/**************************/
+
+@media (max-width: 84em) {
+    .hero {
+        max-width: 120rem;
+    }
+
+    .heading-primary {
+        font-size: 4.4rem;
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.6rem;
+        padding: 1.6rem;
+    }
+}
+
+/**************************/
+/* BELOW 1200px (landscape tablets) */
+/**************************/
+
+/*? Everything appears very large (100% resolution) -> we can change our html default font size*/
+
+@media(max-width:75em) {
+    html {
+        /* 9px / 16px = 56.25% */
+        font-size: 56.25%;
+    }
+
+    .hero {
+        gap: 4.8rem;
+    }
+
+    .main-nav-list {
+        gap: 3.2rem;
+    }
+
+    .testimonials-container {
+        padding: 9.6rem 3.2rem;
+    }
+
+    .grid {
+        column-gap: 4.8rem;
+        row-gap: 6.4rem;
+    }
+
+    .heading-secondary {
+        font-size: 3.6rem;
+    }
+
+    .heading-tertiary {
+        font-size: 2.4rem;
+    }
+
+    .header {
+        padding: 0 3.2rem;
+    }
+}
+
+/**************************/
+/* BELOW 944px (Tablets) */
+/**************************/
+
+@media(max-width: 59em) {
+    html {
+        font-size: 50%;
+    }
+
+    /*! Changing most content to one column since thats better for mobile experience */
+    .hero {
+        grid-template-columns: 1fr;
+
+        /* Spacing was very weird, text was from one side to the other -> increase padding */
+        padding: 0 8rem;
+
+        /* Gap is too small vertically between image and icons*/
+        gap: 6.4rem;
+    }
+
+    /** Image was too big for one column */
+    .hero-img {
+        width: 50%;
+    }
+
+    /** Centering all elements for this one column */
+    .hero-text-box {
+        text-align: center;
+    }
+
+    .hero-img-box {
+        text-align: center;
+    }
+
+    .delivered-meals {
+        justify-content: center;
+        /* Visual hierarchy to match it up with text from above instead of image below */
+        margin-top: 3.2rem;
+    }
+
+
+    /** Company logos are too big and cramped -> make smaller */
+    .logos img {
+        height: 2.4rem;
+
+    }
+
+    /** Text in the meal cards are too big when around 800px -> decrease amount of padding to increase space*/
+    .meal-content {
+        padding: 2.4rem 3.2rem 3.2rem 3.2rem;
+    }
+
+    /*! Testimonials and gallery into one column */
+    .section-testimonials {
+        grid-template-columns: 1fr;
+    }
+
+    /** Changing gallery to be WIDER instead of TALLER (6 columns) */
+    .gallery {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    /*! Changing cta into better ratio column */
+    .cta {
+        grid-template-columns: 60fr 40fr;
+    }
+
+    /** Cta-forms into one column */
+    .cta-form {
+        grid-template-columns: 1fr;
+    }
+
+    .btn--form {
+        margin-top: 1.2rem;
+    }
+
+    /*! MOBILE NAVIGATION */
+    .btn-mobile-nav {
+        /* Reversing display none from before */
+        display: block;
+
+    }
+
+    .main-nav {
+        /** Making an "overlay" menu for each button */
+
+        background-color: rgba(255, 255, 255, 0.95);
+
+        /* relative positon = parent-> header */
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        /* Making it occupy entire screen */
+        width: 100%;
+        height: 100vh;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        /* Hide the navigation */
+        /* DOES NOT ALLOW TRANSITIONS */
+        /* display: none; */
+
+        /* 1) Hide visually */
+        opacity: 0;
+
+        /* 2) Make unaccessible to mouse and keyboard (still exists) */
+        pointer-events: none;
+
+        /* 3) Hide from screen readers */
+        visibility: hidden;
+
+        /** Making animation -> fly in from left */
+        transform: translateX(100%);
+
+        transition: all 1s ease-in;
+    }
+
+    /*! FOR JAVA SCRIPT PURPOSES */
+    .nav-open .main-nav {
+
+        /* When we OPEN the nav -> we have to reset everything we did before back to normal */
+
+        /* 1) */
+        opacity: 1;
+
+        /* 2) */
+        pointer-events: all;
+
+        /* 3) */
+        visibility: visible;
+
+        /* For animation  */
+        transform: translateX(0%);
+
+    }
+
+    /*! Making the close button visible again ONLY WHEN nav-open EXISTS */
+
+    .nav-open .icon-mobile-nav[name="close-outline"] {
+        display: block;
+    }
+
+    /* Making menu button hidden */
+    .nav-open .icon-mobile-nav[name="menu-outline"] {
+        display: none;
+    }
+
+    .main-nav-list {
+        flex-direction: column;
+        gap: 4.8rem;
+    }
+
+    .main-nav-link:link,
+    .main-nav-link:visited {
+        font-size: 3rem;
+    }
+}
+
+
+/**************************/
+/* BELOW 744px (Small Tablets) */
+/**************************/
+
+@media(max-width: 44em) {
+
+    .grid--3-cols,
+    .grid--4-cols {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .diets {
+        /* making the diet span all columns */
+        grid-column: 1 / -1;
+
+        /* making it centered */
+        justify-self: center;
+    }
+
+    .heading-secondary {
+        margin-bottom: 4.8rem;
+    }
+
+    .pricing-plan {
+        width: 100%;
+    }
+
+
+    /** Rearranging the footer grid  */
+    .grid--footer {
+        /* We make 6 grids to allow for more creativity */
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .nav-col {
+        grid-row: 1;
+        grid-column: span 2;
+        margin-bottom: 3.2rem;
+    }
+
+    .logo-col {
+        grid-column: span 3;
+    }
+
+    .address-col {
+        grid-column: span 3;
+    }
+}
+
+
+/**************************/
+/* BELOW 544px (Phones) */
+/**************************/
+
+@media(max-width: 34em) {
+
+    .grid {
+        row-gap: 4.8rem;
+    }
+
+    .grid--2-cols,
+    .grid--3-cols,
+    .grid--4-cols {
+        grid-template-columns: 1fr;
+    }
+
+    .section-hero {
+        padding: 2.4rem 0 6.4rem 0;
+    }
+
+    .hero {
+        /*Horizontal Spacing was too large, we want to reverse what we did before */
+        padding: 0 3.2rem;
+
+
+    }
+
+    .btn,
+    .btn:link,
+    .btn:visited {
+        /* Making buttons larger but less width */
+        padding: 2.4rem 1.6rem;
+    }
+
+    .hero-img {
+        width: 80%;
+    }
+
+    .logos img {
+        height: 1.2rem;
+    }
+
+    /** For phone image section, using nth child selector and assigning them their rows */
+
+    /*We are selecting the .step-img-box which is the 3RD CHILD of ITS PARENT ELEMENT*/
+    .step-img-box:nth-child(3) {
+
+        grid-row: 4;
+    }
+
+    .step-img-box {
+        transform: translateY(2.4rem);
+    }
+
+    .testimonials {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.2rem;
+    }
+
+    .cta {
+        grid-template-columns: 1fr;
+    }
+
+    /** We do this b/c the container had no height and therefore wasn't displaying -> add height -> change position to 1st */
+    .cta-img-box {
+        grid-row: 1;
+        height: 32rem;
+    }
+
+    .cta-text-box {
+        padding: 3.2rem;
+    }
+}
+
+/* - Font sizes (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+ */
+
+/* - Spacing system (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128 */

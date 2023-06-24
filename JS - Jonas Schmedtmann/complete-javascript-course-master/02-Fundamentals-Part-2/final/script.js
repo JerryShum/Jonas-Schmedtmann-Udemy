@@ -1,7 +1,7 @@
 'use strict';
 
-/*
-///////////////////////////////////////
+
+/////////////////////////////////////
 // Activating Strict Mode
 let hasDriversLicense = false;
 const passTest = true;
@@ -110,7 +110,7 @@ const yearsUntilRetirement = function (birthYeah, firstName) {
 
 console.log(yearsUntilRetirement(1991, 'Jonas'));
 console.log(yearsUntilRetirement(1950, 'Mike'));
-*/
+* /
 
 ///////////////////////////////////////
 // Coding Challenge #1
@@ -586,4 +586,4 @@ const calcAverage = function (arr) {
 console.log(calcAverage([2, 3, 7]));
 console.log(calcAverage(totals));
 console.log(calcAverage(tips));
-*/
+

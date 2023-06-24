@@ -14,7 +14,7 @@ function logger(){
 //Calling/running/invoking function
 logger();
 
-//Creating a function called fruitProcessor with parameters apples and oranges (should be numbers)
+// Creating a function called fruitProcessor with parameters apples and oranges (should be numbers)
 function fruitProcessor(apples, oranges){
     console.log(apples, oranges);
     const juice = `Juice with ${apples} apples and ${oranges} oranges.`;
@@ -134,16 +134,16 @@ console.log(yearsUntilRetirement(1900, 'Meow'));
 //Instead of storing 3 similar values into separate variables, we can use an array
 const friend1 = 'Jerry';
 const friend2 = 'Vel';
-const friend3 = 'April';
+const friend3 = 'meow';
 
-const friends = ['Jerry', 'Vel', 'April'];
+const friends = ['Jerry', 'Vel', 'meow'];
 console.log(friends);
 
 //Can also define an array like this:
 const years = new Array(2022, 2021, 2020, 2019);
 
 //* Arrays are mutable and can be changed
-friends[2] = 'April2';
+friends[2] = 'meow2';
 console.log(friends);
 
 //To find the length of the array, use .length
@@ -153,7 +153,7 @@ console.log(years.length);
 
 //? Array Operations
 /*
-const friends = ['Jerry', 'Vel', 'April'];
+const friends = ['Jerry', 'Vel', 'meow'];
 
 //Push adds an element to the end of the array, Push also returns the length of the 'NEW' Array
 friends.push('Jay');
@@ -186,7 +186,7 @@ console.log(friends.includes('Vel'));
 const jerryPerson = [
     'Jerry',
     19,
-    ['April', 'Vel', 'Iona', 'James'],
+    ['meow', 'Vel', 'Iona', 'James'],
     'Student',
     'etc.',
 ]
@@ -200,7 +200,7 @@ const jerry = {
     lastName: 'Shum',
     age: 2022 - 2003,
     job: 'Student',
-    friends: ['April', 'Vel', 'Iona', 'James']
+    friends: ['meow', 'Vel', 'Iona', 'James']
 }
 //The keys are called properties - the jerry object has 5 properties
 //The firstName propert has a value of 'Jerry'
@@ -215,7 +215,7 @@ const jerry = {
     lastName: 'Shum',
     age: 2022 - 2003,
     job: 'Student',
-    friends: ['April', 'Vel', 'Iona', 'James']
+    friends: ['meow', 'Vel', 'Iona', 'James']
 }
 
 //To access a property and their associated value, use DOT NOTATION
@@ -256,7 +256,7 @@ jerry['game'] = 'Maplestory';
 console.log(jerry.location);
 
 //Challenge -> recreate string using object properties
-//'Jerry has 3 friends, and his best friend is called April'
+//'Jerry has 3 friends, and his best friend is called meow'
 
 console.log(`${jerry.firstName} has ${jerry.friends.length} friends, and his best friend is ${jerry.friends[0]}`);
 */
@@ -269,7 +269,7 @@ const jerry = {
     lastName: 'Shum',
     birthYear: 2003,
     job: 'Student',
-    friends: ['April', 'Vel', 'Iona', 'James'],
+    friends: ['meow', 'Vel', 'Iona', 'James'],
     hasDriversLicense: true,
 
     //Adding function as a key/property
@@ -330,7 +330,7 @@ for(let rep = 1 ; rep <=10 ; rep++){
 const jerryPerson = [
     'Jerry',
     19,
-    ['April', 'Vel', 'Iona', 'James'],
+    ['meow', 'Vel', 'Iona', 'James'],
     'Student',
     'etc.',
 ]

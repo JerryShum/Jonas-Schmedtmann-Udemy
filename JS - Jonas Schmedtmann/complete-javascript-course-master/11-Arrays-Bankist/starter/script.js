@@ -61,6 +61,63 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+
+//? Creating DOM elements 
+const displayMovements = function (movements) {
+
+  containerMovements.innerHTML = ' ';
+  //Basically seting the inner HTML to an empty string(the thing that was already there before)
+
+  movements.forEach(function (move, i) {
+
+    const type = move > 0 ? 'deposit' : 'withdrawal';
+    //Ternary operator: if move is > 0 then its value is deposit, if else, withdrawal
+
+    //! Making an html template
+    const html = `
+    <div class="movements__row">
+      <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+      <div class="movements__value">${move}</div>
+    </div>
+    `;
+
+    //! insertAdjacentHTML
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+    //Basically manually inserting NEW HTML into our document -> function takes in the POSITION of WHERE to insert, and then the string of the html (template string literal)
+    //We use afterbegin b/c each new element will be inserted BEFORE the other one -> we can use beforeEND to insert the elements AFTER the other ones if we wanted to (bottom to top vs top to bottom)
+
+  })
+}
+
+displayMovements(account1.movements);
+
+//? Computing Usernames from objects
+
+const user = `Steven Thomas Williams`; //stw
+
+const createUsernames = function (accounts) {
+
+  accounts.forEach(function (account) {
+    account.username = account.owner
+      .toLowerCase()
+      .split(' ')
+      .map(function (word) {
+        return word[0];
+      })
+      .join('');
+
+  })
+
+}
+createUsernames(accounts)
+console.log(accounts);
+
+// Function will take in an array of accounts (objects) -> forEach account inside of this array -> new value username created inside each account -> makes username out of the owner values
+
+//map method will return only the first letter of each string and all the other methods will help
+
+// we used forEach b/c we didnt need to return any new object/value
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -208,4 +265,60 @@ currenciesUnique.forEach(function (value, key, map) {
 //For sets, the key is the same as the value b/c THEY DO NOT HAVE KEYS and NO INDEXES (keys dont make sense)
 
 */
+/*
+//? The map method
 
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]
+
+const eurToUsd = 1.1;
+
+const movementsUSD = movements.map(function (mov) {
+  return mov * eurToUsd;
+})
+
+console.log(movements);
+console.log(movementsUSD);
+
+const movementsUSDfor = [];
+for (const mov of movements) movementsUSDfor.push(mov * eurToUsd);
+console.log(movementsUSDfor);
+
+const movementsDescription = movements.map(function (mov, index, array) {
+
+  return `Movement ${index + 1}: You deposited ${mov > 0 ? `deposited` : `withdrew`} ${Math.abs(mov)}`
+
+})
+
+console.log(movementsDescription);
+*/
+
+
+//? The filter method
+/*
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]
+
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+})
+
+console.log(deposits);
+
+const withdrawals = movements.filter(function (mov) {
+  return mov < 0;
+})
+
+console.log(withdrawals);
+//! Using a forOf loop instead of methods
+
+const depositsFor = [];
+for (const mov of movements) {
+  if (mov > 0) {
+    depositsFor.push(mov);
+  }
+}
+
+console.log(depositsFor);
+*/
+
+//? The reduce method
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]

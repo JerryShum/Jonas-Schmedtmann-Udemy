@@ -77,7 +77,7 @@ const displayMovements = function (movements) {
     const html = `
     <div class="movements__row">
       <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-      <div class="movements__value">${move}</div>
+      <div class="movements__value">${move}£</div>
     </div>
     `;
 
@@ -89,7 +89,7 @@ const displayMovements = function (movements) {
   })
 }
 
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 //? Computing Usernames from objects
 
@@ -117,6 +117,85 @@ console.log(accounts);
 //map method will return only the first letter of each string and all the other methods will help
 
 // we used forEach b/c we didnt need to return any new object/value
+
+//? Calculating and displaying summary
+
+const calcDisplaySummary = function (account) {
+  const incomes = account.movements
+    .filter(movements => movements > 0)
+    .reduce((acc, mov) => acc + mov, 0)
+    ;
+
+  labelSumIn.textContent = `${incomes}£`;
+
+  const out = account.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  labelSumOut.textContent = `${Math.abs(out)}£`
+
+  //Interest is paid 1.2% on each DEPOSIT
+  const interest = account.movements
+    .filter(mov => mov > 0)//Filtering in ONLY DEPOSITS
+    .map(deposit => deposit * 0.012)
+    .filter((int, i, array) => {
+      console.log(array);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+
+  labelSumInterest.textContent = `${interest}£`
+};
+
+// calcDisplaySummary(account1.movements);
+
+//? Printing Balance
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce(function (accum, movement) {
+    return accum + movement;
+  }, 0);
+
+  labelBalance.textContent = `${balance} EUR`;
+}
+
+calcDisplayBalance(account1.movements);
+
+//? Implementing Login
+
+//! Event Handlers
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  //Prevent form from submitting -> since this is a button for a FORM, when we submit it we RELOAD THE PAGE (this prevents this)
+  e.preventDefault();
+
+  //Finding the correct account with the associated username
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value)
+
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    //! Display UI and Welcome message
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner.split(' ')[0]}`;
+    containerApp.style.opacity = 100;
+
+    //! Clearing input fields
+    inputLoginPin.value = inputLoginUsername.value = ``;
+    inputLoginPin.blur();
+
+
+
+    //! Display movements
+    displayMovements(currentAccount.movements);
+    //! Display balance
+    calcDisplayBalance(currentAccount.movements);
+    //! Display Summary
+    calcDisplaySummary(currentAccount);
+    console.log(`LOGIN`);
+  }
+  // the ?. means that it will only execute if and ONLY IF the currenct account AND pin exist (if account doesnt exist, it does not work, same as doing currentAccount && currentAccount.pin)
+})
+
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -321,4 +400,51 @@ console.log(depositsFor);
 */
 
 //? The reduce method
+/*
+// Remember: reduce -> boil down all elements of an array into one single value
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]
+
+const balance = movements.reduce(function (accumulator, current, index, array) {
+  console.log(`Iteration ${index}: ${accumulator}`);
+  return accumulator + current;
+}, 0)
+
+// accumulator is like a snowball
+// The as the 2nd parameter of the reduce function is the initial value of the accumulator (0 -> start counting from 0)
+console.log(balance);
+
+//? Maximum Value
+
+const max = movements.reduce(function (accum, movement) {
+  if (accum > movement) {
+    return accum;
+  } else {
+    return mov;
+  }
+}, movements[0])
+*/
+
+//? Magic of chaining methods
+/*
+const eurToUsd = 1.1;
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]
+
+const totalDepositsUSD = movements.filter(mov => mov > 0).map(mov => mov * eurToUsd).reduce((acc, mov) => acc + mov, 0)
+
+console.log(totalDepositsUSD);
+*/
+
+//? The Find Method
+// We use this to find one element of an array based on a condition
+/*
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]
+
+const firstWithdrawl = movements.find(function (mov) {
+  return mov < 0;
+});
+
+//Will only return the FIRST element that fulfills the condition 
+//Also does NOT RETURN a new ARRAY and instead the element itself
+
+console.log(firstWithdrawl);
+*/

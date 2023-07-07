@@ -118,6 +118,17 @@ console.log(accounts);
 
 // we used forEach b/c we didnt need to return any new object/value
 
+const updateUI = function (acc) {
+  //Display Movements
+  displayMovements(acc.movements);
+
+  //Display Balance
+  calcDisplayBalance(acc);
+
+  //Display Summary
+  calcDisplaySummary(acc);
+}
+
 //? Calculating and displaying summary
 
 const calcDisplaySummary = function (account) {
@@ -150,15 +161,15 @@ const calcDisplaySummary = function (account) {
 // calcDisplaySummary(account1.movements);
 
 //? Printing Balance
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce(function (accum, movement) {
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce(function (accum, movement) {
     return accum + movement;
   }, 0);
 
-  labelBalance.textContent = `${balance} EUR`;
+  labelBalance.textContent = `${acc.balance} EUR`;
 }
 
-calcDisplayBalance(account1.movements);
+calcDisplayBalance(account1);
 
 //? Implementing Login
 
@@ -185,17 +196,86 @@ btnLogin.addEventListener('click', function (e) {
 
 
 
-    //! Display movements
-    displayMovements(currentAccount.movements);
-    //! Display balance
-    calcDisplayBalance(currentAccount.movements);
-    //! Display Summary
-    calcDisplaySummary(currentAccount);
+
+    updateUI(currentAccount);
     console.log(`LOGIN`);
   }
   // the ?. means that it will only execute if and ONLY IF the currenct account AND pin exist (if account doesnt exist, it does not work, same as doing currentAccount && currentAccount.pin)
 })
 
+//? Implementing Transfers
+
+btnTransfer.addEventListener('click', function (event) {
+  event.preventDefault();
+
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(function (account) {
+    return account.username === inputTransferTo.value;
+  });
+  //Finding the matching username to the one we inputted in the transfer to field
+  //Find method will return the first element that matches the condition inside the callback function 
+
+  inputTransferAmount.value = inputTransferTo.value = ``;
+  //Clearing and cleaning the input fields
+
+  if (amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username) {
+    console.log("Transfer Valid");
+
+    //! Doing the transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    //Update UI
+    updateUI(currentAccount);
+  }
+  //Transfer should only happen if amount is > 0 and the user has enough balance to transfer AND make sure that receiverAcc exists (true) (?. to actually check if the receiver acc even exists and then checks if matches the own acc)
+})
+
+//? Loans using some and every
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    // Add movement
+    currentAccount.movements, push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = '';
+})
+
+//? Close account (using findIndex method and splice method)
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  //Check credentials  
+  if (inputCloseUsername.value === currentAccount.username && Number(inputClosePin.value) === currentAccount.pin) {
+
+    // Finding Index of current account
+    const index = accounts.findIndex(function (acc) {
+      return acc.username === currentAccount.username;
+    });
+    console.log(index);
+
+    // Deleting Account
+    accounts.splice(index, 1);
+    // Deleting account at the index and only once
+
+    // Hide UI / Logging out
+    containerApp.style.opacity = 0;
+  }
+
+  inputCloseUsername.value = inputClosePin.value = '';
+
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -443,8 +523,33 @@ const firstWithdrawl = movements.find(function (mov) {
   return mov < 0;
 });
 
-//Will only return the FIRST element that fulfills the condition 
+//Will only return the FIRST element that fulfills the condition
 //Also does NOT RETURN a new ARRAY and instead the element itself
 
 console.log(firstWithdrawl);
+*/
+
+
+//? some and every methods
+
+// some will check every value in an array to see if ANY "some" values meet certain criteria
+// every will check if every value in an array meets certain criteria
+
+/*
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300]
+
+//! Some
+// EQUALITY
+console.log(movements.includes(-130));
+
+// CONDITION
+console.log(movements.some(mov => mov === -130));
+// will return true if there are atleast one elements that = -130
+
+const anyDeposits = movements.some(mov => mov > 0);
+// Basically checks if there is atleast one deposit in the array
+
+//! Every
+console.log(movements.every(mov => mov > 0));
+console.log(account4.movements.every(mov => mov > 0));
 */

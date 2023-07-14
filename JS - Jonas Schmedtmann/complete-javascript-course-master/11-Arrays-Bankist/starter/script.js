@@ -63,10 +63,14 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 
 //? Creating DOM elements 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
 
   containerMovements.innerHTML = ' ';
   //Basically seting the inner HTML to an empty string(the thing that was already there before)
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  // slice creates a copy of an array 
+  // terniary operator: if(sort = true) -> movs = movements.slice().sort((a, b) => a - b), else -> mov = movements (no sort)
 
   movements.forEach(function (move, i) {
 
@@ -277,6 +281,21 @@ btnClose.addEventListener('click', function (e) {
 
 });
 
+
+//? Sort
+
+//! State variable:
+let sorted = false;
+
+// we use this to determine whether or not our array is sorted -> if false -> when we click on button, it will sort
+// if true -> if we click on button -> we want to unsort
+// everytime we click it toggles between false and true
+
+btnSort.addEventListener('click', function (event) {
+  event.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+})
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -552,4 +571,76 @@ const anyDeposits = movements.some(mov => mov > 0);
 //! Every
 console.log(movements.every(mov => mov > 0));
 console.log(account4.movements.every(mov => mov > 0));
+*/
+
+//? Flat and FlatMap
+/*
+// Flat method will flatten an array of arrays into one single array
+// FlatMap will do the same thing but will also allow us to use map method right after
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat());
+// flat method only goes 1 level deep (default)
+
+
+const accountMovements = accounts.map(acc => acc.movements);
+console.log(accountMovements);
+
+const allMovements = accountMovements.flat();
+console.log(allMovements);
+
+const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+
+// can also chain all of these methods together .map().flat().reduce()
+
+//! Flatmap
+// combines flat and map methods together
+
+const overallBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance2);
+
+// Flatmap only goes 1 level deep -> if we need 2 we must use the flat method
+*/
+
+
+//? Sorting Arrays
+/*
+//! Strings
+
+const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+console.log(owners.sort());
+// sorts alphabetically -> ALSO MUTATES THE ARRAY
+
+//! Numbers
+console.log(movements);
+console.log(movements.sort);
+// originally sorts the numbers as if they were treated like strings (neg. -> 1 -> 2 -> etc.)
+
+
+// In order to sort in ASCENDING order -> we must use the arguments
+// return > 0, A,B
+// return < 0, B,A
+
+// DESCENDING:
+// return > 0 (positive value), b A
+// return < 0 (neg), A B
+movements.sort((a, b) => {
+
+  if (a > b) {
+    return 1;
+  } else {
+    return -1;
+  }
+
+});
+
+// Shortform:
+
+movements.sort((a,b) => a-b);
+// Sorts in ascending order
 */

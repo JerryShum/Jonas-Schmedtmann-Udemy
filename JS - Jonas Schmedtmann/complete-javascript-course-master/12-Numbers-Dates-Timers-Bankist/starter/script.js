@@ -93,7 +93,7 @@ const displayMovements = function (movements, sort = false) {
       <div class="movements__row">
         <div class="movements__type movements__type--${type}">${i + 1
       } ${type}</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
 
@@ -250,4 +250,92 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 
+//? Converting and Checking Numbers
 
+// all numbers are represented as floating point numbers -> 23 = 23.0
+// numbers are represented in a BINARY FORMAT (hard to represent some fractions)
+
+/*
+
+console.log(0.1 + 0.2); // 0.30000000000000004
+
+console.log(0.1 + 0.2 === 0.3); //False
+
+//! Converting string to number
+
+console.log(Number('23'));
+console.log(+'23');
+// this one does type conversion (automatic)
+
+//! Parsing
+// parsing numbers from a string -> tries to get rid of unnecessary letters
+// number must be at the front of the string
+// argument is the radix (base number we use)
+
+console.log(Number.parseInt('30px')); //30
+console.log(Number.parseInt('e23')); //NaN
+
+console.log(Number.parseFloat('2.5rem')); //2.5
+
+//! NaN
+// use to check if something is NaN
+console.log(Number.isNaN(20));
+console.log(Number.isNaN('20')); //Doesnt return true b/c it's actual value isn't "NaN" (string)
+console.log(Number.isNaN(+'20X')); //NaN b/c when trying to convert this string into a number, it's not possible -> NaN
+console.log(Number.isNaN(23 / 0)); //Infinity
+
+//! isFinite
+// THIS IS BETTER TO CHECK IF A VALUE IS ACTUALLY A NUMBER
+console.log(Number.isFinite(20)); //true
+console.log(Number.isFinite('20')); //false
+console.log(Number.isNaN(+'20X')); //false
+console.log(Number.isFinite(20 / 0)); //false
+*/
+
+//? Math and Rounding
+
+//! Square and sqrt
+
+console.log(Math.sqrt(25)); //sqrt of 25
+console.log(25 ** (0.5));  // 25^ 1/2 (sqrt)
+console.log(8 ** (1 / 3)); //Cubic root 
+
+//! Max
+console.log(Math.max(5, 18, 23, 11, 2)); //23
+// Does type conversion ('23' == 23)
+// Does NOT do parsing
+
+//! Min
+console.log(Math.min(5, 18, 23, 11, 2));
+
+//! PI
+// area of a circle with 10px radius
+
+console.log(Math.PI * Number.parseFloat('10px') ** 2);//Pi R 2
+
+//! Random
+
+console.log(Math.trunc(Math.random() * 6) + 1);
+// Creates a random number between 1 & 6
+// Math.random -> 0 - 0.99 * 5  = 0.599
+// Trunc shortens the number to the integer -> 0 - 5
+//  +1 -> 1 - 6
+
+const randomInt = (min, max) => Math.trunc(Math.random() * (max - min) + 1) + min;
+// 0...1 -> 0... (max-min) -> min...max
+
+//! Rounding Decimals
+// Rounds decimals to the specified point
+
+console.log((2.7).toFixed(3)); //2.700
+console.log((2.745).toFixed(2)); //2.75
+
+//? Creating Dates
+
+const now = new Date();
+console.log(now);
+
+console.log(new Date('Aug 02 2020 18:05:41'));
+console.log(new Date('December 24, 2015'));
+
+console.log(new Date(account1.movementsDates[0]));

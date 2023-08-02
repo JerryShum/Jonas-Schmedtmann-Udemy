@@ -237,7 +237,7 @@ console.log(navHeight);
 const stickyNav = function (entries) {
   const [entry] = entries;
   // destructuring the first value of the entries array(what we see on our console)
-  console.log(entry);
+  // console.log(entry);
 
   // we want to add the sticky class when the header is NOT on the screen (isIntersecting = false)
   if (!entry.isIntersecting) {
@@ -255,7 +255,105 @@ const headerObserver = new IntersectionObserver(stickyNav, {
 });
 headerObserver.observe(header);
 
+////////////////////////////////////////////////////
 
+//? Revealing elements on scroll
+
+const allSections = document.querySelectorAll('.section');
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+  // inside of the entry, there is a target with associated properties
+
+  // Section1 is intersecting at the start of loading -> BUT the isIntersecting property is false -> false false -> true -> return out of function
+  if (!entry.isIntersecting) return;
+
+  entry.target.classList.remove('section--hidden');
+
+  // We keep getting entries after we scroll past -> we dont like this due to performance -> unobserve the specific target after accomplishing our goal
+  observer.unobserve(entry.target);
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.15
+});
+
+allSections.forEach(function (section) {
+  sectionObserver.observe(section);
+  section.classList.add('section--hidden');
+})
+
+////////////////////////////////////////////////////
+
+//? Lazy Loading Images
+const imgTarget = document.querySelectorAll('img[data-src]');
+// We are selecting all the images with the property of data-src (similar to css)
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+
+  // Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  // the entry.target is the element that is currently being intersected
+
+  //! Load event
+  // Load event occurs once the images are switched
+  // we can use this to know when to remove the lazy class
+  entry.target.addEventListener('load', function () {
+
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+
+}
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
+
+////////////////////////////////////////////////////
+
+//? Slider Component
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let currentSlide = 0;
+const maxSlide = slides.length;
+
+const slider = document.querySelector('.slider');
+slider.style.transform = 'scale(0.5)';
+
+// Putting all slides side-by-side
+slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * index})`);
+slider.style.overflow = 'visible';
+
+//Function for buttons
+const goToSlide = function (curSlide) {
+  slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * (index - curSlide)})`);
+  //currentSlide = 1: -100%, 0%, 100%, 200%
+}
+goToSlide(0);
+
+// Button functionality
+btnRight.addEventListener('click', function () {
+  if (currentSlide === maxSlide - 1) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  }
+
+
+})
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

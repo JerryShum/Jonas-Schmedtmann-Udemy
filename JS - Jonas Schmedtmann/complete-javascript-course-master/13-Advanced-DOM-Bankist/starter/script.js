@@ -282,7 +282,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
 })
 
 ////////////////////////////////////////////////////
@@ -318,7 +318,7 @@ const imgObserver = new IntersectionObserver(loadImg, {
   rootMargin: '200px',
 });
 
-imgTargets.forEach(img => imgObserver.observe(img));
+imgTarget.forEach(img => imgObserver.observe(img));
 
 ////////////////////////////////////////////////////
 
@@ -332,27 +332,50 @@ const maxSlide = slides.length;
 
 const slider = document.querySelector('.slider');
 slider.style.transform = 'scale(0.5)';
-
-// Putting all slides side-by-side
-slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * index})`);
 slider.style.overflow = 'visible';
 
-//Function for buttons
+//! Putting all slides side-by-side
+slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * index})`);
+
+//! Function for buttons
 const goToSlide = function (curSlide) {
   slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * (index - curSlide)})`);
   //currentSlide = 1: -100%, 0%, 100%, 200%
 }
-goToSlide(0);
 
-// Button functionality
+goToSlide(0);
+// We do this b/c we want to start at the first slide (index 0)
+
+//! Next Slide
+const nextSlide = function () {
+  if (currentSlide === maxSlide - 1) {
+    currentSlide = 0;
+    // Basically if we click the button on the last slide, it will loop back to the first one by setting the index back to 0
+  } else {
+    currentSlide++;
+  }
+
+  goToSlide(curSlide);
+}
+
+//! Previous Slide
+const prevSlide = function () {
+  if (currentSlide === 0) {
+    currentSlide === maxSlide - 1;
+    // Loop backwards to the last element of the array
+  } else {
+    currentSlide--;
+  }
+  goToSlide(curSlide);
+}
+
+//! Button functionality
 btnRight.addEventListener('click', function () {
   if (currentSlide === maxSlide - 1) {
     currentSlide = 0;
   } else {
     currentSlide++;
   }
-
-
 })
 
 ////////////////////////////////////////////////////

@@ -323,66 +323,144 @@ imgTarget.forEach(img => imgObserver.observe(img));
 ////////////////////////////////////////////////////
 
 //? Slider Component
-const slides = document.querySelectorAll('.slide');
-const btnLeft = document.querySelector('.slider__btn--left');
-const btnRight = document.querySelector('.slider__btn--right');
-const dotContainer = document.querySelector('.dots');
 
-let currentSlide = 0;
-const maxSlide = slides.length;
+//* Sometimes we like to contain the entire thing in a function to not pollute the global space
 
-// const slider = document.querySelector('.slider');
-// slider.style.transform = 'scale(0.5)';
-// slider.style.overflow = 'visible';
+const sliderFunc = function () {
+  const slides = document.querySelectorAll('.slide');
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+  const dotContainer = document.querySelector('.dots');
 
-//! Putting all slides side-by-side
-slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * index}%)`);
+  let currentSlide = 0;
+  const maxSlide = slides.length;
 
-//! Function for buttons
-const goToSlide = function (curSlide) {
-  slides.forEach((s, index) => s.style.transform = `translateX(${100 * (index - curSlide)}%)`);
-  //currentSlide = 1: -100%, 0%, 100%, 200%
-}
+  // const slider = document.querySelector('.slider');
+  // slider.style.transform = 'scale(0.5)';
+  // slider.style.overflow = 'visible';
 
-goToSlide(0);
-// We do this b/c we want to start at the first slide (index 0)
+  //! Putting all slides side-by-side
+  slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * index}%)`);
 
-//! Next Slide
-const nextSlide = function () {
-  if (currentSlide === maxSlide - 1) {
-    currentSlide = 0;
-    // Basically if we click the button on the last slide, it will loop back to the first one by setting the index back to 0
-  } else {
-    currentSlide++;
+  //! Function for buttons
+  const goToSlide = function (curSlide) {
+    slides.forEach((s, index) => s.style.transform = `translateX(${100 * (index - curSlide)}%)`);
+    //currentSlide = 1: -100%, 0%, 100%, 200%
   }
 
-  goToSlide(currentSlide);
-}
+  // goToSlide(0);
+  // We do this b/c we want to start at the first slide (index 0)
 
-//! Previous Slide
-const prevSlide = function () {
-  if (currentSlide === 0) {
-    currentSlide === maxSlide - 1;
-    // Loop backwards to the last element of the array
-  } else {
-    currentSlide--;
+  //! Next Slide
+  const nextSlide = function () {
+    if (currentSlide === maxSlide - 1) {
+      currentSlide = 0;
+      // Basically if we click the button on the last slide, it will loop back to the first one by setting the index back to 0
+    } else {
+      currentSlide++;
+    }
+
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
   }
-  goToSlide(currentSlide);
+
+  //! Previous Slide
+  const prevSlide = function () {
+    if (currentSlide === 0) {
+      currentSlide = maxSlide - 1;
+      // Loop backwards to the last element of the array
+    } else {
+      currentSlide--;
+    }
+    goToSlide(currentSlide);
+    activateDot(currentSlide);
+  }
+
+  //! Button functionality
+  btnRight.addEventListener('click', nextSlide);
+
+  btnLeft.addEventListener('click', prevSlide);
+
+  //! HANDLING KEYBOARD EVENTS
+  document.addEventListener('keydown', function (event) {
+    console.log(event.key);
+
+    if (event.key === 'ArrowLeft') prevSlide();
+    event.key === 'ArrowRight' && nextSlide();
+    // using short circuiting
+  });
+
+  //! DOT FUNCTIONALITY
+  const createDots = function () {
+    // we are creating html elmenents at the end of the parent element -> we use slides.forEach just b/c there are 4 slides and 4 dots
+    slides.forEach(function (s, index) {
+      dotContainer.insertAdjacentHTML('beforeend', `<button class="dots__dot" data-slide="${index}"></button>`);
+
+    });
+  }
+
+  // createDots();
+
+  //* We use event delegation for functionality
+  dotContainer.addEventListener('click', function (event) {
+    if (event.target.classList.contains('dots__dot')) {
+      const slide = event.target.dataset.slide;
+      // getting the value of the slide we want to go to via dataset value
+      goToSlide(slide);
+      activateDot(slide)
+    }
+  })
+
+  //* We create a new function for adding active class to dots
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
+    // Removing active class from all dot elements
+
+    document.querySelector(`.dots__dot[data-slide="${slide}"]`).classList.add('dots__dot--active');
+    // Adding the active class to the dot element corresponding to the correct slide
+  }
+
+  // activateDot(0);
+  // makes sure that when we first load the site, the first dot is lit up
+
+  //! Initialization Function
+  const init = function () {
+    goToSlide(0)
+    createDots();
+    activateDot(0);
+  }
+
+  init();
 }
 
-//! Button functionality
-btnRight.addEventListener('click', nextSlide);
+sliderFunc();
+////////////////////////////////////////////////////
 
-btnLeft.addEventListener('click', prevSlide);
+//? Lifecycle DOM events
+// Events that are launched at the start of a webpage's creation (RIGHT AFTER the HTML and DOM TREE are created) and ENDS when the page is closed
 
-//! HANDLING KEYBOARD EVENTS
-document.addEventListener('keydown', function (event) {
-  console.log(event.key);
+document.addEventListener('DOMContentLoaded', function (event) {
 
-  if (event.key === 'ArrowLeft') prevSlide();
-  event.key === 'ArrowRight' && nextSlide();
-  // using short circuiting
+  console.log('YES');
+
 });
+
+window.addEventListener('load', function (event) {
+  console.log('Loaded');
+})
+// load event is fired when everything in the page has fully loaded(css, images, external resources, etc.)
+
+/*window.addEventListener('beforeunload', function (event) {
+  event.preventDefault();
+  console.log(event);
+  event.returnValue="";
+});
+*/
+//! happens RIGHT BEFORE user closes and leaves the page (press the x button)
+// Should only be used if information is going to be lost (commenting, forms, general writing)
+// useful for making sure if the user actually wants to leave
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

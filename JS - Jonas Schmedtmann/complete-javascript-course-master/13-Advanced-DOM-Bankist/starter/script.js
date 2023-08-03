@@ -326,20 +326,21 @@ imgTarget.forEach(img => imgObserver.observe(img));
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector('.dots');
 
 let currentSlide = 0;
 const maxSlide = slides.length;
 
-const slider = document.querySelector('.slider');
-slider.style.transform = 'scale(0.5)';
-slider.style.overflow = 'visible';
+// const slider = document.querySelector('.slider');
+// slider.style.transform = 'scale(0.5)';
+// slider.style.overflow = 'visible';
 
 //! Putting all slides side-by-side
-slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * index})`);
+slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * index}%)`);
 
 //! Function for buttons
 const goToSlide = function (curSlide) {
-  slides.forEach((slide, index) => slide.style.transform = `translateX(${100 * (index - curSlide)})`);
+  slides.forEach((s, index) => s.style.transform = `translateX(${100 * (index - curSlide)}%)`);
   //currentSlide = 1: -100%, 0%, 100%, 200%
 }
 
@@ -355,7 +356,7 @@ const nextSlide = function () {
     currentSlide++;
   }
 
-  goToSlide(curSlide);
+  goToSlide(currentSlide);
 }
 
 //! Previous Slide
@@ -366,17 +367,22 @@ const prevSlide = function () {
   } else {
     currentSlide--;
   }
-  goToSlide(curSlide);
+  goToSlide(currentSlide);
 }
 
 //! Button functionality
-btnRight.addEventListener('click', function () {
-  if (currentSlide === maxSlide - 1) {
-    currentSlide = 0;
-  } else {
-    currentSlide++;
-  }
-})
+btnRight.addEventListener('click', nextSlide);
+
+btnLeft.addEventListener('click', prevSlide);
+
+//! HANDLING KEYBOARD EVENTS
+document.addEventListener('keydown', function (event) {
+  console.log(event.key);
+
+  if (event.key === 'ArrowLeft') prevSlide();
+  event.key === 'ArrowRight' && nextSlide();
+  // using short circuiting
+});
 
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

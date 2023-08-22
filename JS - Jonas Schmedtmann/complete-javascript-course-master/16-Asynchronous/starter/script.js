@@ -164,12 +164,69 @@ const getCountryData = function (country) {
 };
 */
 
+//? Chaining Promises
+// Combination of consuming and chaining promises
+// Doing the same thing we did before (nested ajax calls)
+
+//? Handling Rejected Promises / Catching errors
+// What we do when the promise is REJECTED/NOT FULFILLED (fetch request is disconnected or somehting) -> UNCAUGHT PROMISE
+
+const renderError = function (message) {
+    countriesContainer.insertAdjacentText('beforeend', message);
+    countriesContainer.style.opacity = 1;
+};
+
+
 //! Simplified code:
 const getCountryData = function (country) {
     // Fetch returns a promise -> .then is used on promises when they are FULFILLED -> allows a callback function
+    //! Country 1
     fetch(`https://restcountries.com/v3.1/name/${country}`)
+        // First callback function -> fullfilled || Second -> error/rejected
+        .then(
+            response => response.json()
+            //,err => alert(err)
+        )
+        .then(data => {
+            console.log(data);
+
+            renderCountry(data[0]);
+
+            // Once again, using optional chaining -> data[0] exists (api) -> .borders (accessing borders property) -> ?. (optional chaining checks whether the .borders property exists) -> returns undefined if not, and accesses borders[0] if it does exist
+            const neighbour = data[0].borders?.[0];
+
+            console.log(neighbour);
+
+            if (!neighbour) return;
+
+
+            //! Country 2
+            // remember that fetch gives us a promise -> we MUST return a promise 
+            // .then() method automatically returns a promise but if we MANUALLY return one, it will override it.
+            // we RETURN a promise so that we can consume it with another .then function
+            // This is called the FULFILLED VALUE (result of the operation)
+            return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+
+        })
+        // called it response b/c we are now dealing with the fulfilled value of a fetch function
+        // take the returned promise -> convert it into a .json using .json() 
         .then(response => response.json())
-        .then(data => renderCountry(data[0]));
+        // take in the .json (data) -> read it and render country
+        .then(data => renderCountry(data[0], 'neighbour'))
+        //! using a .catch method to handle all errors in one place
+        // will catch an error anywhere in the chain
+        .catch(err => {
+            console.error(`${err} ERROR DETECTED`);
+            renderError(`Something went wrong ${err}`);
+        })
+
+        //! .finally method
+        // will always trigger no matter what happends (no matter if the promise is fulfilled or rejected)
+        .finally(() => countriesContainer.style.opacity = 1)
+        ;
 };
 
-getCountryData('canada')
+btn.addEventListener('click', function () {
+    getCountryData('canada');
+});
+
